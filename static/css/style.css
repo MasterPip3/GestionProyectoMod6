@@ -637,110 +637,121 @@ button, input, textarea, select {
     list-style: none;
 }
 
-/* =========================================
+/* ==============================
    DASHBOARD
-   ========================================= */
+   ============================== */
 
 .dashboard {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .dashboard-encabezado {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 2rem;
     margin-bottom: 3rem;
 }
 
 .dashboard-encabezado h1 {
-    margin: 0 0 0.75rem;
-    font-size: 2rem;
+    margin: 0.35rem 0 0.75rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
     font-weight: 700;
 }
 
-.dashboard-encabezado .texto-secundario {
+.etiqueta-seccion {
+    display: block;
+    color: var(--color-cian);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+}
+
+.texto-secundario {
+    color: var(--color-texto-secundario);
     margin: 0;
 }
 
+.boton-principal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    background-color: var(--color-cian);
+    color: #080a0f;
+    font-weight: 600;
+    text-decoration: none;
+}
 
-/* =========================================
-   VISORES
-   ========================================= */
+.boton-principal:hover {
+    color: #080a0f;
+    filter: brightness(1.08);
+    box-shadow: 0 0 16px rgba(0, 245, 255, 0.25);
+}
+
+.mensajes-dashboard {
+    margin-bottom: 2rem;
+}
+
+.visores-proyectos {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
 
 .visor-proyectos {
     width: 100%;
-    margin-bottom: 3.5rem;
 }
 
 .visor-encabezado {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.visor-titulo {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 700;
+.visor-encabezado h2 {
+    margin: 0.35rem 0 0;
+    font-size: 1.35rem;
+    font-weight: 600;
 }
 
-.rol-encargado {
-    color: var(--color-cian);
+.carrusel-proyectos {
+    width: min(100%, 900px);
+    margin: 0 auto;
 }
 
-.rol-ayudante {
-    color: var(--color-violeta);
-}
-
-.rol-colaborador {
-    color: var(--color-magenta);
-}
-
-
-/* =========================================
-   CARRUSEL
-   ========================================= */
-
-.visor-carrusel {
+.carrusel-ventana {
     width: 100%;
-    padding: 0 3rem;
+    overflow: hidden;
 }
 
-.visor-carrusel .carousel-inner {
-    overflow: visible;
+.carrusel-pista {
+    display: flex;
+    transition: transform 0.35s ease;
+    will-change: transform;
 }
 
-.visor-carrusel .carousel-item {
-    padding: 0.75rem 0;
-}
-
-.visor-tarjetas {
+.carrusel-pagina {
+    flex: 0 0 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.9rem;
+    gap: 1rem;
+    padding: 0.25rem;
 }
 
-
-/* =========================================
-   TARJETAS DE PROYECTO
-   ========================================= */
-
 .tarjeta-proyecto {
-    width: 88%;
-    max-width: 900px;
-    min-height: 150px;
-
+    position: relative;
     display: block;
-
+    width: 100%;
+    min-height: 190px;
+    padding: 1.4rem 1.5rem;
     background-color: var(--color-tarjeta);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radio-borde);
-
     color: var(--color-texto);
-
+    border: 1px solid var(--color-borde-prioridad, var(--color-cian));
+    border-radius: var(--radio-borde);
+    text-decoration: none;
     transition:
         transform var(--transicion-normal),
         box-shadow var(--transicion-normal),
@@ -748,255 +759,225 @@ button, input, textarea, select {
 }
 
 .tarjeta-proyecto:hover {
-    transform: translateY(-3px);
-    border-color: rgba(0, 245, 255, 0.3);
-
+    color: var(--color-texto);
+    transform: translateY(-2px);
     box-shadow:
-        0 0 16px rgba(0, 245, 255, 0.08);
+        0 0 18px var(--color-glow-prioridad, rgba(0, 245, 255, 0.16));
 }
 
-.tarjeta-proyecto:active {
-    transform: translateY(-1px);
+.tarjeta-etiqueta {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--color-texto-secundario);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
 }
 
-.tarjeta-proyecto-contenido {
-    width: 100%;
-    min-width: 0;
-    padding: 1rem 1.25rem;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-
-/* =========================================
-   INFORMACIÓN DE TARJETA
-   ========================================= */
-
-.tarjeta-proyecto-titulo {
-    width: 100%;
-
-    margin: 0 0 0.35rem;
-
-    font-size: 1.05rem;
+.tarjeta-titulo {
+    margin: 0;
+    font-size: 1.3rem;
     font-weight: 700;
+    line-height: 1.3;
+}
 
+.tarjeta-descripcion {
+    width: 100%;
+    margin: 0.55rem 0 1.25rem;
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+    line-height: 1.4;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.tarjeta-proyecto-rol {
-    margin-bottom: 0.45rem;
+.tarjeta-datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
 
-    font-size: 0.75rem;
+.tarjeta-dato {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.tarjeta-dato span,
+.tarjeta-prioridad > span {
+    color: var(--color-texto-secundario);
+    font-size: 0.72rem;
     font-weight: 600;
 }
 
-.tarjeta-proyecto-descripcion {
-    width: 100%;
-
-    margin: 0 0 0.45rem;
-
-    color: var(--color-texto-secundario);
-
-    font-size: 0.85rem;
-    line-height: 1.4;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.tarjeta-dato strong {
+    font-size: 0.82rem;
+    font-weight: 500;
 }
 
-.tarjeta-proyecto-fechas,
-.tarjeta-proyecto-progreso {
-    margin: 0 0 0.35rem;
-
-    color: var(--color-texto-secundario);
-
-    font-size: 0.8rem;
+.tarjeta-prioridad {
+    margin-top: 1.25rem;
 }
 
-.tarjeta-proyecto-progreso {
-    margin-bottom: 0.2rem;
-}
-
-
-/* =========================================
-   ESTRELLAS
-   ========================================= */
-
-.tarjeta-proyecto-estrellas {
+.estrellas-prioridad {
     display: flex;
     align-items: center;
-
-    height: 1rem;
-
-    margin-top: 0.1rem;
-
-    font-size: 0.8rem;
+    gap: 0.15rem;
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
     line-height: 1;
 }
 
 .estrella {
-    display: inline-block;
-
-    margin-right: 0.08rem;
-
-    transition:
-        filter var(--transicion-rapida),
-        transform var(--transicion-rapida);
-}
-
-.estrella-inactiva {
-    color: rgba(255, 255, 255, 0.16);
+    color: rgba(245, 247, 250, 0.18);
 }
 
 .estrella-activa {
+    color: var(--color-borde-prioridad, var(--color-cian));
     text-shadow:
-        0 0 5px currentColor;
+        0 0 6px var(--color-glow-prioridad, rgba(0, 245, 255, 0.18));
 }
 
-
-/* Prioridad de las estrellas */
+/*
+ * Prioridad visual.
+ * Se mantiene separada del semáforo de tareas.
+ */
 
 .prioridad-1 {
-    color: var(--color-azul);
+    --color-borde-prioridad: var(--color-azul);
+    --color-glow-prioridad: rgba(40, 123, 255, 0.18);
 }
 
 .prioridad-2 {
-    color: var(--color-cian);
+    --color-borde-prioridad: var(--color-cian);
+    --color-glow-prioridad: rgba(0, 245, 255, 0.18);
 }
 
 .prioridad-3 {
-    color: var(--color-exito);
+    --color-borde-prioridad: var(--color-violeta);
+    --color-glow-prioridad: rgba(168, 85, 247, 0.18);
 }
 
 .prioridad-4 {
-    color: var(--color-violeta);
+    --color-borde-prioridad: var(--color-magenta);
+    --color-glow-prioridad: rgba(255, 43, 214, 0.18);
 }
 
 .prioridad-5 {
-    color: var(--color-magenta);
+    --color-borde-prioridad: var(--color-error);
+    --color-glow-prioridad: rgba(255, 59, 95, 0.18);
 }
 
-
-/* =========================================
-   CONTROLES DEL CARRUSEL
-   ========================================= */
-
-.visor-control {
-    width: 2.5rem;
-
-    opacity: 1;
-
-    color: var(--color-texto);
-
-    transition:
-        filter var(--transicion-rapida),
-        opacity var(--transicion-rapida);
+.tarjeta-proyecto:has(.prioridad-1),
+.tarjeta-proyecto:has(.prioridad-2),
+.tarjeta-proyecto:has(.prioridad-3),
+.tarjeta-proyecto:has(.prioridad-4),
+.tarjeta-proyecto:has(.prioridad-5) {
+    border-color: var(--color-borde-prioridad);
 }
-
-.visor-control:hover {
-    opacity: 1;
-    filter: drop-shadow(0 0 6px rgba(0, 245, 255, 0.45));
-}
-
-.visor-control:focus {
-    box-shadow: none;
-}
-
-.visor-control svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    stroke-width: 1.8;
-}
-
-
-/* =========================================
-   VISOR SIN PROYECTOS
-   ========================================= */
 
 .visor-vacio {
-    width: 88%;
-    max-width: 900px;
-
+    width: min(100%, 900px);
     margin: 0 auto;
-
-    padding: 1.5rem;
-
-    background-color: var(--color-tarjeta);
-
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--color-superficie);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radio-borde);
-
-    color: var(--color-texto-secundario);
-
-    text-align: center;
 }
 
 .visor-vacio p {
     margin: 0;
+    color: var(--color-texto-secundario);
+}
+
+.carrusel-controles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.carrusel-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    background-color: transparent;
+    color: var(--color-texto);
+    border: 1px solid rgba(0, 245, 255, 0.35);
+    border-radius: var(--radio-borde);
+    cursor: pointer;
+    transition:
+        box-shadow var(--transicion-rapida),
+        transform var(--transicion-rapida),
+        opacity var(--transicion-rapida);
+}
+
+.carrusel-boton:hover:not(:disabled) {
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.18);
+}
+
+.carrusel-boton:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.carrusel-boton:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
+.carrusel-boton svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.carrusel-indicador {
+    min-width: 2rem;
+    text-align: center;
+    color: var(--color-texto-secundario);
+    font-size: 0.78rem;
 }
 
 
-/* =========================================
-   RESPONSIVE
-   ========================================= */
+/* ==============================
+   DASHBOARD RESPONSIVE
+   ============================== */
 
-@media (max-width: 991.98px) {
+@media (max-width: 767.98px) {
 
     .dashboard-encabezado {
-        align-items: flex-start;
+        align-items: stretch;
         flex-direction: column;
+        margin-bottom: 2.5rem;
+    }
+
+    .dashboard-encabezado .boton {
+        align-self: flex-start;
     }
 
     .tarjeta-proyecto {
-        width: 92%;
+        min-height: 185px;
     }
 
-    .visor-carrusel {
-        padding-left: 2.5rem;
-        padding-right: 2.5rem;
-    }
-}
-
-
-@media (max-width: 575.98px) {
-
-    .dashboard-encabezado h1 {
-        font-size: 1.6rem;
+    .tarjeta-datos {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
     }
 
-    .visor-proyectos {
-        margin-bottom: 2.75rem;
+    .tarjeta-dato {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        align-items: center;
+        gap: 0.5rem;
     }
 
-    .visor-carrusel {
-        padding-left: 1.75rem;
-        padding-right: 1.75rem;
+    .tarjeta-prioridad {
+        margin-top: 1rem;
     }
 
-    .tarjeta-proyecto {
-        width: 100%;
-        min-height: 145px;
-    }
-
-    .tarjeta-proyecto-contenido {
-        padding: 0.9rem 1rem;
-    }
-
-    .tarjeta-proyecto-titulo {
-        font-size: 0.95rem;
-    }
-
-    .visor-control {
-        width: 1.75rem;
-    }
-
-    .visor-control svg {
-        width: 1.25rem;
-        height: 1.25rem;
-    }
 }
