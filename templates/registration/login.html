@@ -1,19 +1,76 @@
 {% extends "base.html" %}
 
-{% block title %}
-Iniciar sesión
-{% endblock %}
+{% block title %}Iniciar sesión{% endblock %}
 
 {% block content %}
 
-<h1>Iniciar sesión</h1>
+    <section class="pagina-formulario">
 
-<form method="post">
-    {% csrf_token %}
+        <div class="formulario-contenedor">
 
-    {{ form.as_p }}
+            <h1>Gestión de proyectos</h1>
 
-    <button type="submit">Ingresar</button>
-</form>
+            <h2>Iniciar sesión</h2>
+
+            {% if form.non_field_errors %}
+                <div class="mensaje mensaje-error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <form method="post" class="formulario">
+
+                {% csrf_token %}
+
+                <div class="campo-formulario">
+                    <label for="{{ form.username.id_for_label }}">
+                        Usuario
+                    </label>
+
+                    {{ form.username }}
+
+                    {% if form.username.errors %}
+                        <div class="mensaje-campo">
+                            {{ form.username.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="campo-formulario">
+                    <label for="{{ form.password.id_for_label }}">
+                        Contraseña
+                    </label>
+
+                    {{ form.password }}
+
+                    {% if form.password.errors %}
+                        <div class="mensaje-campo">
+                            {{ form.password.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="boton boton-principal">
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+            <p class="enlace-formulario">
+                ¿No tienes una cuenta?
+                <a href="{% url 'registro' %}">
+                    Crear cuenta
+                </a>
+            </p>
+
+            <p class="enlace-formulario">
+                <a href="{% url 'inicio' %}">
+                    Volver al inicio
+                </a>
+            </p>
+
+        </div>
+
+    </section>
 
 {% endblock %}

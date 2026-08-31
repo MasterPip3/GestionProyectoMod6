@@ -3,7 +3,7 @@ from .views import inicio, dashboard, registro, crear_proyecto_view, detalle_pro
 
 
 urlpatterns = [
-    path('', inicio, name='inicio'),
+    path('inicio/', inicio, name='inicio'),
     path('dashboard/', dashboard, name='dashboard'),
     path('registro/', registro, name='registro'),
     path('proyectos/crear/', crear_proyecto_view, name='crear_proyecto'),

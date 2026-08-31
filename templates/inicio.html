@@ -1,10 +1,37 @@
 {% extends "base.html" %}
 
 {% block title %}
-Inicio
+Inicio | Gestión de proyectos
 {% endblock %}
 
 {% block content %}
-    <h1>ProyectoModulo6</h1>
-    <p>Proyecto en desarrollo.</p>
+
+    <section class="pagina-publica">
+
+        <div class="presentacion-inicio">
+
+            <h1>Gestión de proyectos</h1>
+
+            <p class="texto-secundario">
+                Organiza proyectos, tareas y equipos de trabajo
+                desde un solo lugar.
+            </p>
+
+            <div class="acciones-publicas">
+
+                <a href="{% url 'login' %}" class="boton boton-principal">
+                    Iniciar sesión
+                </a>
+
+                <a href="{% url 'registro' %}" class="boton boton-secundario">
+                    Crear cuenta
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
 {% endblock %}

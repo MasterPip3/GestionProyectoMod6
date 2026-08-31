@@ -10,7 +10,7 @@
     --color-texto: #f5f7fa;
     --color-texto-secundario: #a8b0bf;
 
-    --color_cian: #00f5ff;
+    --color-cian: #00f5ff;
     --color-azul: #287bff;
     --color-violeta: #a855f7;
     --color-magenta: #ff2bd6;
@@ -61,6 +61,7 @@ a {
 button, input, textarea, select {
     font: inherit;
 }
+
 
 /* ==============================
     NAVBAR
@@ -405,4 +406,597 @@ button, input, textarea, select {
         padding-right: 1rem;
     }
 
+}
+
+
+/* ==============================
+    PÁGINAS PÚBLICAS
+   ============================== */
+
+.pagina-publica, .pagina-formulario {
+    width: 100%;
+    min-height: calc(100vh - var(--navbar-altura));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ==============================
+    INICIO
+   ============================== */
+
+.presentacion-inicio {
+    width: min(100%, 720px);
+    text-align: center;
+}
+
+.presentacion-inicio h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+}
+
+.texto-secundario {
+    margin: 0 auto;
+    max-width: 600px;
+    color: var(--color-texto-secundario);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.acciones-publicas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: min(100%, 360px);
+    margin-top: 2.5rem;
+}
+
+
+/* ==============================
+    FORMULARIOS
+   ============================== */
+
+.formulario-contenedor {
+    width: min(100%, 520px);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.formulario-contenedor h1 {
+    margin-bottom: 0.75rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.formulario-contenedor h2 {
+    margin-bottom: 2.5rem;
+    color: var(--color-texto);
+    font-size: 1.35rem;
+    font-weight: 600;
+}
+
+.formulario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: left;
+}
+
+.campo-formulario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.campo-formulario label {
+    color: var(--color-texto);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.campo-formulario input, .campo-formulario textarea, .campo-formulario select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 2.75rem;
+    padding: 0.7rem 0.85rem;
+
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radio-borde);
+
+    outline: none;
+
+    transition:
+        border-color var(--transicion-rapida),
+        box-shadow var(--transicion-rapida);
+}
+
+.campo-formulario input:focus, .campo-formulario textarea:focus, .campo-formulario select:focus {
+    border-color: rgba(0, 245, 255, 0.7);
+    box-shadow: 0 0 8px rgba(0, 245, 255, 0.15);
+}
+
+.campo-formulario textarea {
+    min-height: 8.25rem;
+    resize: none;
+    overflow-y: auto;
+}
+
+.ayuda-campo {
+    color: var(--color-texto-secundario);
+    font-size: 0.75rem;
+}
+
+.mensaje {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radio-borde);
+}
+
+.mensaje-error {
+    color: var(--color-error);
+    border: 1px solid rgba(255, 59, 95, 0.35);
+    background-color: rgba(255, 59, 95, 0.06);
+}
+
+.mensaje-campo {
+    color: var(--color-error);
+    font-size: 0.8rem;
+}
+
+.boton-principal,
+.boton-secundario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    border-radius: var(--radio-borde);
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        transform var(--transicion-rapida),
+        filter var(--transicion-rapida),
+        box-shadow var(--transicion-rapida);
+}
+
+.boton-principal {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-cian);
+    color: #080a0f;
+    font-weight: 600;
+    border: 1px solid var(--color-cian);
+}
+
+.boton-principal:hover {
+    color: #080a0f;
+    filter: blur(0.15px);
+    box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+}
+
+.boton-principal:active {
+    transform: scale(0.98);
+}
+
+.boton-secundario {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    color: var(--color-texto);
+    border: 1px solid rgba(0, 245, 255, 0.45);
+    background-color: transparent;
+    font-weight: 600;
+}
+
+.boton-secundario:hover {
+    color: var(--color-texto);
+    filter: blur(0.15px);
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.18);
+}
+
+.boton-secundario:active {
+    transform: scale(0.98);
+}
+
+.enlace-formulario {
+    margin-top: 1.25rem;
+    color: var(--color-texto-secundario);
+    font-size: 0.85rem;
+}
+
+.enlace-formulario a {
+    color: var(--color-violeta);
+    font-weight: 600;
+    transition: 
+        color var(--transicion-rapida),
+        filter var(--transicion-rapida);
+}
+
+.enlace-formulario a:hover {
+    color: var(--color-magenta);
+    filter: blur(0.2px);
+}
+
+.mensaje-campo {
+    margin-top: 0.15rem;
+    color: var(--color-error);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.mensaje-campo ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* =========================================
+   DASHBOARD
+   ========================================= */
+
+.dashboard {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.dashboard-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.dashboard-encabezado h1 {
+    margin: 0 0 0.75rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.dashboard-encabezado .texto-secundario {
+    margin: 0;
+}
+
+
+/* =========================================
+   VISORES
+   ========================================= */
+
+.visor-proyectos {
+    width: 100%;
+    margin-bottom: 3.5rem;
+}
+
+.visor-encabezado {
+    margin-bottom: 1rem;
+}
+
+.visor-titulo {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.rol-encargado {
+    color: var(--color-cian);
+}
+
+.rol-ayudante {
+    color: var(--color-violeta);
+}
+
+.rol-colaborador {
+    color: var(--color-magenta);
+}
+
+
+/* =========================================
+   CARRUSEL
+   ========================================= */
+
+.visor-carrusel {
+    width: 100%;
+    padding: 0 3rem;
+}
+
+.visor-carrusel .carousel-inner {
+    overflow: visible;
+}
+
+.visor-carrusel .carousel-item {
+    padding: 0.75rem 0;
+}
+
+.visor-tarjetas {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+
+/* =========================================
+   TARJETAS DE PROYECTO
+   ========================================= */
+
+.tarjeta-proyecto {
+    width: 88%;
+    max-width: 900px;
+    min-height: 150px;
+
+    display: block;
+
+    background-color: var(--color-tarjeta);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radio-borde);
+
+    color: var(--color-texto);
+
+    transition:
+        transform var(--transicion-normal),
+        box-shadow var(--transicion-normal),
+        border-color var(--transicion-normal);
+}
+
+.tarjeta-proyecto:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 245, 255, 0.3);
+
+    box-shadow:
+        0 0 16px rgba(0, 245, 255, 0.08);
+}
+
+.tarjeta-proyecto:active {
+    transform: translateY(-1px);
+}
+
+.tarjeta-proyecto-contenido {
+    width: 100%;
+    min-width: 0;
+    padding: 1rem 1.25rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+/* =========================================
+   INFORMACIÓN DE TARJETA
+   ========================================= */
+
+.tarjeta-proyecto-titulo {
+    width: 100%;
+
+    margin: 0 0 0.35rem;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tarjeta-proyecto-rol {
+    margin-bottom: 0.45rem;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tarjeta-proyecto-descripcion {
+    width: 100%;
+
+    margin: 0 0 0.45rem;
+
+    color: var(--color-texto-secundario);
+
+    font-size: 0.85rem;
+    line-height: 1.4;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tarjeta-proyecto-fechas,
+.tarjeta-proyecto-progreso {
+    margin: 0 0 0.35rem;
+
+    color: var(--color-texto-secundario);
+
+    font-size: 0.8rem;
+}
+
+.tarjeta-proyecto-progreso {
+    margin-bottom: 0.2rem;
+}
+
+
+/* =========================================
+   ESTRELLAS
+   ========================================= */
+
+.tarjeta-proyecto-estrellas {
+    display: flex;
+    align-items: center;
+
+    height: 1rem;
+
+    margin-top: 0.1rem;
+
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+.estrella {
+    display: inline-block;
+
+    margin-right: 0.08rem;
+
+    transition:
+        filter var(--transicion-rapida),
+        transform var(--transicion-rapida);
+}
+
+.estrella-inactiva {
+    color: rgba(255, 255, 255, 0.16);
+}
+
+.estrella-activa {
+    text-shadow:
+        0 0 5px currentColor;
+}
+
+
+/* Prioridad de las estrellas */
+
+.prioridad-1 {
+    color: var(--color-azul);
+}
+
+.prioridad-2 {
+    color: var(--color-cian);
+}
+
+.prioridad-3 {
+    color: var(--color-exito);
+}
+
+.prioridad-4 {
+    color: var(--color-violeta);
+}
+
+.prioridad-5 {
+    color: var(--color-magenta);
+}
+
+
+/* =========================================
+   CONTROLES DEL CARRUSEL
+   ========================================= */
+
+.visor-control {
+    width: 2.5rem;
+
+    opacity: 1;
+
+    color: var(--color-texto);
+
+    transition:
+        filter var(--transicion-rapida),
+        opacity var(--transicion-rapida);
+}
+
+.visor-control:hover {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(0, 245, 255, 0.45));
+}
+
+.visor-control:focus {
+    box-shadow: none;
+}
+
+.visor-control svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke-width: 1.8;
+}
+
+
+/* =========================================
+   VISOR SIN PROYECTOS
+   ========================================= */
+
+.visor-vacio {
+    width: 88%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 1.5rem;
+
+    background-color: var(--color-tarjeta);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radio-borde);
+
+    color: var(--color-texto-secundario);
+
+    text-align: center;
+}
+
+.visor-vacio p {
+    margin: 0;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 991.98px) {
+
+    .dashboard-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .tarjeta-proyecto {
+        width: 92%;
+    }
+
+    .visor-carrusel {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+}
+
+
+@media (max-width: 575.98px) {
+
+    .dashboard-encabezado h1 {
+        font-size: 1.6rem;
+    }
+
+    .visor-proyectos {
+        margin-bottom: 2.75rem;
+    }
+
+    .visor-carrusel {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
+    }
+
+    .tarjeta-proyecto {
+        width: 100%;
+        min-height: 145px;
+    }
+
+    .tarjeta-proyecto-contenido {
+        padding: 0.9rem 1rem;
+    }
+
+    .tarjeta-proyecto-titulo {
+        font-size: 0.95rem;
+    }
+
+    .visor-control {
+        width: 1.75rem;
+    }
+
+    .visor-control svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 }

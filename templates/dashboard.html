@@ -1,122 +1,433 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard{% endblock  %}
+{% block title %}Dashboard | Gestión de proyectos{% endblock %}
 
 {% block content %}
 
-    <h1>Dashboard</h1>
+<section class="dashboard">
 
     {% if messages %}
-    
-        {% for message in messages %}
-        
-            <p>{{ message }}</p>
-        
-        {% endfor %}
-    
+        <div class="mensajes-dashboard">
+            {% for message in messages %}
+                <div class="mensaje mensaje-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
-    
-    <p> Bienvenido, {{ usuario.username }}.</p>
 
-    <a href="{% url 'crear_proyecto' %}">Crear proyecto</a>
+    <div class="dashboard-encabezado">
 
-    <hr>
+        <div>
+            <h1>Dashboard</h1>
 
-    <h2>Mis proyectos</h2>
-
-    {% if proyectos_encargado %}
-
-        {% for proyecto in proyectos_encargado %}
-        
-        <article>
-            <h3>
-                <a href="{% url 'detalle_proyecto' proyecto.id %}">
-                    {{ proyecto.nombre }}
-                </a>
-            </h3>
-
-            <p>Prioridad: {{ proyecto.prioridad }}</p>
-
-            <p>
-                Desde {{ proyecto.fecha_inicio }}
-                Hasta {{ proyecto.fecha_termino }}
+            <p class="texto-secundario">
+                Bienvenido, {{ usuario.username }}.
             </p>
+        </div>
 
-            <p>Progreso: {{ proyecto.progreso }}</p>
-        </article>
-                
-        {% endfor %}
+        <a href="{% url 'crear_proyecto' %}" class="boton boton-principal">
+            Crear proyecto
+        </a>
 
-    {% else %}
-        
-        <p>No tienes proyectos como encargado principal</p>
-    
-    {% endif %}
+    </div>
 
-    <hr>
 
-    <h2>Proyectos donde soy ayudante</h2>
+    <!-- ============================== -->
+    <!-- ENCARGADO PRINCIPAL -->
+    <!-- ============================== -->
 
-    {% if proyectos_ayudante %}
-    
-        {% for proyecto in proyectos_ayudante %}
-        
-            <article>
-                <h3>
-                    <a href="{% url 'detalle_proyecto' proyecto.id %}">
-                        {{ proyecto.nombre }}
-                    </a>
-                </h3>
+    <section class="visor-proyectos">
 
-                <p>Prioridad: {{ proyecto.prioridad }}</p>
+        <div class="visor-encabezado">
+            <h2 class="visor-titulo rol-encargado">
+                Encargado principal
+            </h2>
+        </div>
 
-                <p>
-                    Desde {{ proyecto.fecha_inicio }}
-                    Hasta {{ proyecto.fecha_termino }}
-                </p>
+        {% if proyectos_encargado %}
 
-                <p>Progreso: {{ proyecto.progreso }}</p>
-            </article>
-            
-        {% endfor %}
+            <div
+                id="carrusel-encargado"
+                class="carousel slide visor-carrusel"
+                data-bs-interval="false"
+            >
 
-    {% else %}
-        
-        <p>No participas actualmente como ayudante en ningún proyecto.</p>
+                <div class="carousel-inner">
 
-    {% endif %}
+                    {% for proyecto in proyectos_encargado %}
 
-    <hr>
+                        {% if forloop.first or forloop.counter0|divisibleby:5 %}
 
-    <h2>Proyecto donde soy colaborador</h2>
+                            {% if not forloop.first %}
+                                    </div>
+                                </div>
+                            {% endif %}
 
-    {% if proyectos_colaborador %}
-    
-        {% for proyecto in proyectos_colaborador %}
-        
-            <article>
-                <h3>
-                    <a href="{% url 'detalle_proyecto' proyecto.id %}">
-                        {{ proyecto.nombre }}
-                    </a>
-                </h3>
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <div class="visor-tarjetas">
 
-                <p>Prioridad: {{ proyecto.prioridad }}</p>
+                        {% endif %}
 
-                <p>
-                    Desde {{ proyecto.fecha_inicio }}
-                    Hasta {{ proyecto.fecha_termino }}
-                </p>
+                                    <a
+                                        href="{% url 'detalle_proyecto' proyecto.id %}"
+                                        class="tarjeta-proyecto"
+                                    >
 
-                <p>Progreso: {{ proyecto.progreso }}</p>
-            </article>
-        
-        {% endfor %}
+                                        <div class="tarjeta-proyecto-contenido">
 
-    {% else %}
+                                            <h3 class="tarjeta-proyecto-titulo">
+                                                {{ proyecto.nombre }}
+                                            </h3>
 
-        <p>No participas actualmente como colaborador en ningún proyecto.</p>
-    
-    {% endif %}
+                                            <span class="tarjeta-proyecto-rol rol-encargado">
+                                                Encargado principal
+                                            </span>
 
-{% endblock  %}
+                                            <p class="tarjeta-proyecto-descripcion">
+                                                {{ proyecto.descripcion|truncatechars:120 }}
+                                            </p>
+
+                                            <p class="tarjeta-proyecto-fechas">
+                                                {{ proyecto.fecha_inicio }}
+                                                -
+                                                {{ proyecto.fecha_termino }}
+                                            </p>
+
+                                            <p class="tarjeta-proyecto-progreso">
+                                                Progreso: {{ proyecto.progreso }}%
+                                            </p>
+
+                                            <div class="tarjeta-proyecto-estrellas" aria-label="Prioridad {{ proyecto.prioridad }} de 5">
+
+                                                {% for estrella in "12345" %}
+                                                    {% if forloop.counter <= proyecto.prioridad %}
+                                                        <span class="estrella estrella-activa prioridad-{{ proyecto.prioridad }}">
+                                                            ★
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="estrella estrella-inactiva">
+                                                            ★
+                                                        </span>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+
+                        {% if forloop.last %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                {% if proyectos_encargado|length > 5 %}
+
+                    <button
+                        class="carousel-control-prev visor-control"
+                        type="button"
+                        data-bs-target="#carrusel-encargado"
+                        data-bs-slide="prev"
+                        aria-label="Proyectos anteriores"
+                    >
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+
+                    <button
+                        class="carousel-control-next visor-control"
+                        type="button"
+                        data-bs-target="#carrusel-encargado"
+                        data-bs-slide="next"
+                        aria-label="Siguientes proyectos"
+                    >
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="visor-vacio">
+                <p>No tienes proyectos como encargado principal.</p>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ============================== -->
+    <!-- AYUDANTE -->
+    <!-- ============================== -->
+
+    <section class="visor-proyectos">
+
+        <div class="visor-encabezado">
+            <h2 class="visor-titulo rol-ayudante">
+                Ayudante
+            </h2>
+        </div>
+
+        {% if proyectos_ayudante %}
+
+            <div
+                id="carrusel-ayudante"
+                class="carousel slide visor-carrusel"
+                data-bs-interval="false"
+            >
+
+                <div class="carousel-inner">
+
+                    {% for proyecto in proyectos_ayudante %}
+
+                        {% if forloop.first or forloop.counter0|divisibleby:5 %}
+
+                            {% if not forloop.first %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <div class="visor-tarjetas">
+
+                        {% endif %}
+
+                                    <a
+                                        href="{% url 'detalle_proyecto' proyecto.id %}"
+                                        class="tarjeta-proyecto"
+                                    >
+
+                                        <div class="tarjeta-proyecto-contenido">
+
+                                            <h3 class="tarjeta-proyecto-titulo">
+                                                {{ proyecto.nombre }}
+                                            </h3>
+
+                                            <span class="tarjeta-proyecto-rol rol-ayudante">
+                                                Ayudante
+                                            </span>
+
+                                            <p class="tarjeta-proyecto-descripcion">
+                                                {{ proyecto.descripcion|truncatechars:120 }}
+                                            </p>
+
+                                            <p class="tarjeta-proyecto-fechas">
+                                                {{ proyecto.fecha_inicio }}
+                                                -
+                                                {{ proyecto.fecha_termino }}
+                                            </p>
+
+                                            <p class="tarjeta-proyecto-progreso">
+                                                Progreso: {{ proyecto.progreso }}%
+                                            </p>
+
+                                            <div class="tarjeta-proyecto-estrellas" aria-label="Prioridad {{ proyecto.prioridad }} de 5">
+
+                                                {% for estrella in "12345" %}
+                                                    {% if forloop.counter <= proyecto.prioridad %}
+                                                        <span class="estrella estrella-activa prioridad-{{ proyecto.prioridad }}">
+                                                            ★
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="estrella estrella-inactiva">
+                                                            ★
+                                                        </span>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+
+                        {% if forloop.last %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                {% if proyectos_ayudante|length > 5 %}
+
+                    <button
+                        class="carousel-control-prev visor-control"
+                        type="button"
+                        data-bs-target="#carrusel-ayudante"
+                        data-bs-slide="prev"
+                        aria-label="Proyectos anteriores"
+                    >
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+
+                    <button
+                        class="carousel-control-next visor-control"
+                        type="button"
+                        data-bs-target="#carrusel-ayudante"
+                        data-bs-slide="next"
+                        aria-label="Siguientes proyectos"
+                    >
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="visor-vacio">
+                <p>No participas actualmente como ayudante en ningún proyecto.</p>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ============================== -->
+    <!-- COLABORADOR -->
+    <!-- ============================== -->
+
+    <section class="visor-proyectos">
+
+        <div class="visor-encabezado">
+            <h2 class="visor-titulo rol-colaborador">
+                Colaborador
+            </h2>
+        </div>
+
+        {% if proyectos_colaborador %}
+
+            <div
+                id="carrusel-colaborador"
+                class="carousel slide visor-carrusel"
+                data-bs-interval="false"
+            >
+
+                <div class="carousel-inner">
+
+                    {% for proyecto in proyectos_colaborador %}
+
+                        {% if forloop.first or forloop.counter0|divisibleby:5 %}
+
+                            {% if not forloop.first %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <div class="visor-tarjetas">
+
+                        {% endif %}
+
+                                    <a
+                                        href="{% url 'detalle_proyecto' proyecto.id %}"
+                                        class="tarjeta-proyecto"
+                                    >
+
+                                        <div class="tarjeta-proyecto-contenido">
+
+                                            <h3 class="tarjeta-proyecto-titulo">
+                                                {{ proyecto.nombre }}
+                                            </h3>
+
+                                            <span class="tarjeta-proyecto-rol rol-colaborador">
+                                                Colaborador
+                                            </span>
+
+                                            <p class="tarjeta-proyecto-descripcion">
+                                                {{ proyecto.descripcion|truncatechars:120 }}
+                                            </p>
+
+                                            <p class="tarjeta-proyecto-fechas">
+                                                {{ proyecto.fecha_inicio }}
+                                                -
+                                                {{ proyecto.fecha_termino }}
+                                            </p>
+
+                                            <p class="tarjeta-proyecto-progreso">
+                                                Progreso: {{ proyecto.progreso }}%
+                                            </p>
+
+                                            <div class="tarjeta-proyecto-estrellas" aria-label="Prioridad {{ proyecto.prioridad }} de 5">
+
+                                                {% for estrella in "12345" %}
+                                                    {% if forloop.counter <= proyecto.prioridad %}
+                                                        <span class="estrella estrella-activa prioridad-{{ proyecto.prioridad }}">
+                                                            ★
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="estrella estrella-inactiva">
+                                                            ★
+                                                        </span>
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </div>
+
+                                        </div>
+
+                                    </a>
+
+                        {% if forloop.last %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+
+                {% if proyectos_colaborador|length > 5 %}
+
+                    <button
+                        class="carousel-control-prev visor-control"
+                        type="button"
+                        data-bs-target="#carrusel-colaborador"
+                        data-bs-slide="prev"
+                        aria-label="Proyectos anteriores"
+                    >
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+
+                    <button
+                        class="carousel-control-next visor-control"
+                        type="button"
+                        data-bs-target="#carrusel-colaborador"
+                        data-bs-slide="next"
+                        aria-label="Siguientes proyectos"
+                    >
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="visor-vacio">
+                <p>No participas actualmente como colaborador en ningún proyecto.</p>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</section>
+
+{% endblock %}

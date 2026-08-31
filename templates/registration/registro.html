@@ -1,18 +1,68 @@
 {% extends "base.html" %}
 
-{% block title %}Crear cuenta{% endblock  %}
+{% block title %}Crear cuenta{% endblock %}
 
 {% block content %}
 
-    <h1>Crear cuenta</h1>
+<section class="pagina-formulario">
 
-    <form method="post">
-        {% csrf_token %}
+    <div class="formulario-contenedor">
 
-        {{ form.as_p }}
+        <h1>Gestión de proyectos</h1>
 
-        <button type="submit">Registrarse</button>
+        <h2>Crear cuenta</h2>
 
-    </form>
+        <form method="post" class="formulario">
 
-{% endblock  %}
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="campo-formulario">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <div class="mensaje-campo">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="mensaje mensaje-error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="boton boton-principal">
+                Crear cuenta
+            </button>
+
+        </form>
+
+        <p class="enlace-formulario">
+            ¿Ya tienes una cuenta?
+            <a href="{% url 'login' %}">
+                Iniciar sesión
+            </a>
+        </p>
+
+        <p class="enlace-formulario">
+            <a href="{% url 'inicio' %}">
+                Volver al inicio
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
