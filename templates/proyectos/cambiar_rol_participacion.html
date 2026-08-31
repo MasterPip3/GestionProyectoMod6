@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Cambiar rol - {{ participacion_objetivo.usuario.username }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Cambiar rol</h1>
+
+    <p>Proyecto: {{ proyecto.nombre }}</p>
+
+    <p>Usuario: {{ participacion_objetivo.usuario.username }}</p>
+
+    <p>Rol actual: {{ participacion_objetivo.get_rol_display }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Guardar cambio
+        </button>
+    </form>
+
+    <a href="{% url 'participantes_proyecto' proyecto.id %}">Cancelar</a>
+
+{% endblock  %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Participantes - {{ proyecto.nombre }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Participantes</h1>
+
+    <h2>{{ proyecto.nombre }}</h2>
+
+    {% if participantes %}
+    
+        {% for participante in participantes %}
+        
+            <article>
+                <h3>{{ participante.usuario.username }}</h3>
+
+                <p>
+                    Rol:
+                    {{ participante.get_rol_display }}
+                </p>
+
+                {% if participacion.rol == "encargado_principal" and participante != participacion %}
+
+                    <a href="{% url 'cambiar_rol_participacion' proyecto.id participante.id %}">
+                        Cambiar rol
+                    </a>
+
+                    <a href="{% url 'retirar_participante' proyecto.id participante.id %}">
+                        Retirar del proyecto
+                    </a>
+                
+                {% endif %}
+
+                {% if participante == participacion %}
+                
+                    <p>
+                        <a href="{% url 'salir_proyecto' proyecto.id %}">
+                            Salir del proyecto
+                        </a>
+                    </p>
+                
+                {% endif %}
+            </article>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No hay participantes activos en este proyecto.</p>
+    
+    {% endif %}
+
+    <a href="{% url 'detalle_proyecto' proyecto.id %}">Volver al proyecto</a>
+
+{% endblock  %}

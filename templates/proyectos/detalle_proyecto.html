@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %} {{ proyecto.nombre}} {% endblock  %}
+
+{% block content %}
+
+    <h1>{{ proyecto.nombre }}</h1>
+
+    <p>{{ proyecto.descripcion }}</p>
+
+    <p>
+        Fecha de inicio:
+        {{ proyecto.fecha_inicio }}
+    </p>
+
+    <p>
+        Fecha de término:
+        {{ proyecto.fecha_termino }}
+    </p>
+
+    <p>
+        Prioridad:
+        {{ proyecto.prioridad }}
+    </p>
+
+    <p>
+        Progreso:
+        {{ proyecto.progreso }}
+    </p>
+
+    <p>
+        Tu rol:
+        {{ participacion.get_rol_display }}
+    </p>
+
+    <hr>
+
+    <h2>Tareas</h2>
+
+    {% if tareas %}
+    
+        {% for tarea in tareas %}
+        
+        <article>
+            <h3>{{ tarea.nombre }}</h3>
+
+            <p>{{ tarea.descripcion }}</p>
+
+            <p> Desde {{ tarea.fecha_inicio }}
+                Hasta {{ tarea.fecha_termino }}
+            </p>
+
+            <p>
+                Importancia:
+                {{ tarea.importancia }}
+            </p>
+
+            <p>
+                Responsable:
+                {{ tarea.responsable.usuario.username }}
+            </p>
+
+            <a href="{% url 'editar_tarea' proyecto.id tarea.id %}">
+                Editar tarea
+            </a>
+
+            {% if participacion.rol == "encargado_principal" %}
+            
+                <form method="post" action="{% url 'eliminar_tarea' proyecto.id tarea.id %}">
+                    {% csrf_token %}
+
+                    <button type="submit" onclick="return confirm('¿Está seguro de que desea eliminar esta tarea?');">
+                        Eliminar tarea
+                    </button>
+                </form>
+
+            {% endif %}
+        </article>
+
+        {% endfor %}
+    
+    {% else %}
+
+        <p>Este proyecto no tiene tareas activas.</p>
+    
+    {% endif %}
+
+    <a href="{% url 'crear_tarea' proyecto.id %}">
+        Crear tarea
+    </a>
+
+    <p>
+        <a href="{% url 'agregar_participante' proyecto.id %}">
+            Agregar participante
+        </a>
+    </p>
+
+    <p>
+        <a href="{% url 'participantes_proyecto' proyecto.id %}">
+            Ver participantes
+        </a>
+    </p>
+
+    {% if participacion.rol == "encargado_principal" %}
+    
+        <p>
+            <a href="{% url 'eliminar_proyecto' proyecto.id %}">
+                Eliminar proyecto
+            </a>
+        </p>
+    
+    {% endif %}
+
+    <a href="{% url 'dashboard' %}">Volver al dashboard</a>
+
+    <hr>
+
+    <nav>
+        {% if proyecto_anterior %}
+        
+            <a href="{% url 'detalle_proyecto' proyecto_anterior.id %}">
+                Proyecto anterior
+            </a>
+        
+        {% endif %}
+        
+        {% if proyecto_siguiente %}
+        
+            <a href="{% url 'detalle_proyecto' proyecto_siguiente.id %}">
+                Siguiente proyecto
+            </a>
+        
+        {% endif %}
+
+        {% if not proyecto_siguiente and proyecto_primero and proyecto_primero.id != proyecto.id %}
+
+            <a href="{% url 'detalle_proyecto' proyecto_primero.id %}">
+                Volver al primer proyecto
+            </a>
+                
+        {% endif %}
+    </nav>
+    
+
+{% endblock  %}

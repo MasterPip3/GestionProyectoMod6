@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar participante - {{ proyecto.nombre }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Agregar participante</h1>
+
+    <p>Proyecto: {{ proyecto.nombre }} </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Agregar participante</button>
+    </form>
+
+    <a href="{% url 'detalle_proyecto' proyecto.id %}">
+        Cancelar
+    </a>
+
+{% endblock  %}

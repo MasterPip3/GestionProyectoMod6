@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar proyecto - {{ proyecto.nombre }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Eliminar proyecto</h1>
+
+    <p>Proyecto: {{ proyecto.nombre }}</p>
+
+    {% if error %}
+    
+        <p>{{ error }}</p>
+    
+    {% endif %}
+
+    <p>
+        ¿Estás seguro de que quieres eliminar este proyecto?
+    </p>
+
+    <p>
+        El proyecto dejará de aparecer entre tus proyectos activos.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit">
+            Confirmar eliminación
+        </button>
+    </form>
+
+    <a href="{% url 'detalle_proyecto' proyecto.id %}">
+        Cancelar
+    </a>
+
+{% endblock  %}

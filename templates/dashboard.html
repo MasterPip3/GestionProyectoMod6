@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock  %}
+
+{% block content %}
+
+    <h1>Dashboard</h1>
+
+    {% if messages %}
+    
+        {% for message in messages %}
+        
+            <p>{{ message }}</p>
+        
+        {% endfor %}
+    
+    {% endif %}
+    
+    <p> Bienvenido, {{ usuario.username }}.</p>
+
+    <a href="{% url 'crear_proyecto' %}">Crear proyecto</a>
+
+    <hr>
+
+    <h2>Mis proyectos</h2>
+
+    {% if proyectos_encargado %}
+
+        {% for proyecto in proyectos_encargado %}
+        
+        <article>
+            <h3>
+                <a href="{% url 'detalle_proyecto' proyecto.id %}">
+                    {{ proyecto.nombre }}
+                </a>
+            </h3>
+
+            <p>Prioridad: {{ proyecto.prioridad }}</p>
+
+            <p>
+                Desde {{ proyecto.fecha_inicio }}
+                Hasta {{ proyecto.fecha_termino }}
+            </p>
+
+            <p>Progreso: {{ proyecto.progreso }}</p>
+        </article>
+                
+        {% endfor %}
+
+    {% else %}
+        
+        <p>No tienes proyectos como encargado principal</p>
+    
+    {% endif %}
+
+    <hr>
+
+    <h2>Proyectos donde soy ayudante</h2>
+
+    {% if proyectos_ayudante %}
+    
+        {% for proyecto in proyectos_ayudante %}
+        
+            <article>
+                <h3>
+                    <a href="{% url 'detalle_proyecto' proyecto.id %}">
+                        {{ proyecto.nombre }}
+                    </a>
+                </h3>
+
+                <p>Prioridad: {{ proyecto.prioridad }}</p>
+
+                <p>
+                    Desde {{ proyecto.fecha_inicio }}
+                    Hasta {{ proyecto.fecha_termino }}
+                </p>
+
+                <p>Progreso: {{ proyecto.progreso }}</p>
+            </article>
+            
+        {% endfor %}
+
+    {% else %}
+        
+        <p>No participas actualmente como ayudante en ningún proyecto.</p>
+
+    {% endif %}
+
+    <hr>
+
+    <h2>Proyecto donde soy colaborador</h2>
+
+    {% if proyectos_colaborador %}
+    
+        {% for proyecto in proyectos_colaborador %}
+        
+            <article>
+                <h3>
+                    <a href="{% url 'detalle_proyecto' proyecto.id %}">
+                        {{ proyecto.nombre }}
+                    </a>
+                </h3>
+
+                <p>Prioridad: {{ proyecto.prioridad }}</p>
+
+                <p>
+                    Desde {{ proyecto.fecha_inicio }}
+                    Hasta {{ proyecto.fecha_termino }}
+                </p>
+
+                <p>Progreso: {{ proyecto.progreso }}</p>
+            </article>
+        
+        {% endfor %}
+
+    {% else %}
+
+        <p>No participas actualmente como colaborador en ningún proyecto.</p>
+    
+    {% endif %}
+
+{% endblock  %}

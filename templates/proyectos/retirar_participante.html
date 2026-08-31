@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Retirar participante - {{ proyecto.nombre }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Retirar participante</h1>
+
+    <p>Proyecto: {{ proyecto.nombre }}</p>
+
+    <p>
+        Usuario:
+        {{ participacion_objetivo.usuario.username }}
+    </p>
+
+    <p>
+        Rol:
+        {{ participacion_objetivo.get_rol_display }}
+    </p>
+
+    {% if error %}
+    
+        <p>{{ error }}</p>
+        
+    {% endif %}
+
+    <p>
+        ¿Estás seguro de que quieres retirar a este participante del proyecto?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar retiro</button>
+    </form>
+
+    <a href="{% url 'participantes_proyecto' proyecto.id %}">
+        Cancelar
+    </a>
+
+{% endblock  %}

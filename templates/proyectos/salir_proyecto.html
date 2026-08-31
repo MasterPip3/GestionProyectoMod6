@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Salir del proyecto - {{ proyecto.nombre }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Salir del proyecto</h1>
+
+    <p>Proyecto: {{ proyecto.nombre }}</p>
+
+    {% if error %}
+    
+        <p>{{ error }}</p>
+    
+    {% endif %}
+
+    <p>¿Estás seguro de que quieres salir de este proyecto?</p>
+
+    {% if participacion.rol == "encargado_principal" %}
+    
+        <p>
+            Actualmente eres el encargado principal.
+            Si sales del proyecto, el ayudante actual pasará a ser el nuevo encargado principal.
+        </p>
+    
+    {% endif %}
+
+    <p>No podrás salir mientras tengas tareas activas a tu cargo.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit">Continuar</button>
+    </form>
+
+    <a href="{% url 'participantes_proyecto' proyecto.id %}">
+        Cancelar
+    </a>
+
+{% endblock  %}

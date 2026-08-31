@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar salida - {{ proyecto.nombre }} {% endblock  %}
+
+{% block content %}
+
+    <h1>Confirmar salida del proyecto</h1>
+
+    <p>Proyecto: {{ proyecto.nombre }}</p>
+
+    <p>Estás a punto de abandonar este proyecto como encargado principal</p>
+
+    <p>El ayudante pasará a ser el nuevo encargado principal.</p>
+
+    <p>
+        Esta acción modificará el rol de ayudante.
+        ¿Confirmas que deseas continuar?
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit" name="confirmar_transferencia" value="1">
+            Confirmar salida
+        </button>
+    </form>
+
+    <a href="{% url 'participantes_proyecto' proyecto.id %}">
+        Cancelar
+    </a>
+
+{% endblock  %}
