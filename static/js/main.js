@@ -1,103 +1,182 @@
 
 
-
-/* menu-hamburguesa */
 document.addEventListener("DOMContentLoaded", () => {
+
+    /* ==============================
+        MENÚ MÓVIL
+       ============================== */
+
     const menuButton = document.querySelector("[data-menu-toggle]");
     const mobileMenu = document.querySelector("[data-mobile-menu]");
 
-    if (!menuButton || !mobileMenu) {
-        return;
+    if (menuButton && mobileMenu) {
+
+        menuButton.addEventListener("click", () => {
+
+            const menuAbierto = mobileMenu.classList.toggle(
+                "menu-movil--abierto"
+            );
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                menuAbierto ? "true" : "false"
+            );
+
+            menuButton.setAttribute(
+                "aria-label",
+                menuAbierto ? "Cerrar menú" : "Abrir menú"
+            );
+        });
     }
 
-    menuButton.addEventListener("click", () => {
-        const menuAbierto = mobileMenu.classList.toggle("menu-movil--abierto");
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            menuAbierto ? "true" : "false"
+    /* ==============================
+        CARRUSEL DE PROYECTOS
+       ============================== */
+
+    const carruseles = document.querySelectorAll("[data-carrusel]");
+
+    carruseles.forEach((carrusel) => {
+
+        const pista = carrusel.querySelector(".carrusel-pista");
+        const botonAnterior = carrusel.querySelector(
+            "[data-carrusel-anterior]"
         );
-    });
-});
+        const botonSiguiente = carrusel.querySelector(
+            "[data-carrusel-siguiente]"
+        );
+        const indicador = carrusel.querySelector(
+            "[data-carrusel-indicador]"
+        );
 
-
-/* Carrusel */
-document.addEventListener("DOMContentLoaded", () => {
-
-    const visores = document.querySelectorAll("[data-visor]");
-
-    visores.forEach((visor) => {
-
-        const pistas = visor.querySelector("[data-visor-pistas]");
-        const botonAnterior = visor.querySelector("[data-visor-anterior]");
-        const botonSiguiente = visor.querySelector("[data-visor-siguiente]");
-
-        if (!pistas || !botonAnterior || !botonSiguiente) {
+        if (
+            !pista ||
+            !botonAnterior ||
+            !botonSiguiente ||
+            !indicador
+        ) {
             return;
         }
 
+
+        /* ------------------------------
+            Obtener tarjetas
+           ------------------------------ */
+
         const tarjetas = Array.from(
-            pistas.querySelectorAll(".tarjeta-proyecto")
+            pista.children
+        ).filter((elemento) =>
+            elemento.classList.contains("tarjeta-proyecto")
         );
+
+
+        if (tarjetas.length === 0) {
+            return;
+        }
+
+
+        /* ------------------------------
+            Crear páginas de 5 tarjetas
+           ------------------------------ */
 
         const cantidadPorPagina = 5;
         const paginas = [];
 
-        tarjetas.forEach((tarjeta, indice) => {
+        for (
+            let inicio = 0;
+            inicio < tarjetas.length;
+            inicio += cantidadPorPagina
+        ) {
 
-            const indicePagina = Math.floor(
-                indice / cantidadPorPagina
+            const pagina = document.createElement("div");
+
+            pagina.classList.add("carrusel-pagina");
+
+            const tarjetasPagina = tarjetas.slice(
+                inicio,
+                inicio + cantidadPorPagina
             );
 
-            if (!paginas[indicePagina]) {
+            tarjetasPagina.forEach((tarjeta) => {
+                pagina.appendChild(tarjeta);
+            });
 
-                const pagina = document.createElement("div");
+            paginas.push(pagina);
+            pista.appendChild(pagina);
+        }
 
-                pagina.classList.add("visor-pagina");
 
-                paginas.push(pagina);
-                pistas.appendChild(pagina);
-            }
-
-            paginas[indicePagina].appendChild(tarjeta);
-
-        });
+        /* ------------------------------
+            Estado inicial
+           ------------------------------ */
 
         let paginaActual = 0;
 
-        const actualizarVisor = () => {
+        const cantidadPaginas = paginas.length;
 
-            pistas.style.transform =
-                `translateX(-${paginaActual * 100}%)`;
+
+        /* ------------------------------
+            Actualizar carrusel
+           ------------------------------ */
+
+        function actualizarCarrusel() {
+
+            const desplazamiento = paginaActual * 100;
+
+            pista.style.transform =
+                `translateX(-${desplazamiento}%)`;
+
+
+            indicador.textContent =
+                `${paginaActual + 1} / ${cantidadPaginas}`;
+
 
             botonAnterior.disabled =
                 paginaActual === 0;
 
-            botonSiguiente.disabled =
-                paginaActual === paginas.length - 1;
 
-        };
+            botonSiguiente.disabled =
+                paginaActual === cantidadPaginas - 1;
+        }
+
+
+        /* ------------------------------
+            Navegación anterior
+           ------------------------------ */
 
         botonAnterior.addEventListener("click", () => {
 
-            if (paginaActual > 0) {
-                paginaActual -= 1;
-                actualizarVisor();
+            if (paginaActual === 0) {
+                return;
             }
 
+            paginaActual -= 1;
+
+            actualizarCarrusel();
         });
+
+
+        /* ------------------------------
+            Navegación siguiente
+           ------------------------------ */
 
         botonSiguiente.addEventListener("click", () => {
 
-            if (paginaActual < paginas.length - 1) {
-                paginaActual += 1;
-                actualizarVisor();
+            if (paginaActual >= cantidadPaginas - 1) {
+                return;
             }
 
+            paginaActual += 1;
+
+            actualizarCarrusel();
         });
 
-        actualizarVisor();
 
+        /* ------------------------------
+            Estado inicial
+           ------------------------------ */
+
+        actualizarCarrusel();
     });
 
 });

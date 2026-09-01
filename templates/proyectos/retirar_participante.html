@@ -1,40 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Retirar participante - {{ proyecto.nombre }} {% endblock  %}
+{% block title %}Retirar participante - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
+<section class="formulario-contenedor">
+
+    <span class="etiqueta-seccion">PARTICIPACIÓN</span>
+
     <h1>Retirar participante</h1>
 
-    <p>Proyecto: {{ proyecto.nombre }}</p>
+    <h2>{{ proyecto.nombre }}</h2>
 
-    <p>
-        Usuario:
-        {{ participacion_objetivo.usuario.username }}
-    </p>
+    <div class="detalle-dato">
+        <span>Usuario</span>
+        <strong>{{ participacion_objetivo.usuario.username }}</strong>
+    </div>
 
-    <p>
-        Rol:
-        {{ participacion_objetivo.get_rol_display }}
-    </p>
+    <div class="detalle-dato">
+        <span>Rol</span>
+        <strong>{{ participacion_objetivo.get_rol_display }}</strong>
+    </div>
 
     {% if error %}
-    
-        <p>{{ error }}</p>
-        
+        <div class="mensaje mensaje-error">
+            {{ error }}
+        </div>
     {% endif %}
 
-    <p>
+    <p class="texto-secundario">
         ¿Estás seguro de que quieres retirar a este participante del proyecto?
     </p>
 
-    <form method="post">
+    <br>
+
+    <form method="post" class="formulario">
         {% csrf_token %}
-        <button type="submit">Confirmar retiro</button>
+
+        <button type="submit" class="boton boton-eliminar">
+            Confirmar retiro
+        </button>
     </form>
 
-    <a href="{% url 'participantes_proyecto' proyecto.id %}">
-        Cancelar
-    </a>
+    <p class="enlace-formulario">
+        <a href="{% url 'participantes_proyecto' proyecto.id %}">
+            Cancelar
+        </a>
+    </p>
 
-{% endblock  %}
+</section>
+
+{% endblock %}

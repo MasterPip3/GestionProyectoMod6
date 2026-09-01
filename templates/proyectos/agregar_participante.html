@@ -1,23 +1,43 @@
 {% extends "base.html" %}
 
-{% block title %}Agregar participante - {{ proyecto.nombre }} {% endblock  %}
+{% block title %}Agregar participante - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
-    <h1>Agregar participante</h1>
+<section class="pagina-formulario">
 
-    <p>Proyecto: {{ proyecto.nombre }} </p>
+    <div class="formulario-contenedor">
 
-    <form method="post">
-        {% csrf_token %}
+        <span class="etiqueta-seccion">PARTICIPACIÓN</span>
 
-        {{ form.as_p }}
+        <h1>Agregar participante</h1>
+        <hr>
+        <p class="texto-secundario">
+            Agrega un nuevo participante al proyecto
+            
+            <div><strong>{{ proyecto.nombre }}</strong>.</div>
+        </p>
 
-        <button type="submit">Agregar participante</button>
-    </form>
+        <form method="post" class="formulario">
 
-    <a href="{% url 'detalle_proyecto' proyecto.id %}">
-        Cancelar
-    </a>
+            {% csrf_token %}
 
-{% endblock  %}
+            {{ form.as_p }}
+
+            <button type="submit" class="boton boton-principal">
+                Agregar participante
+            </button>
+
+        </form>
+
+        <p class="enlace-formulario">
+            <a href="{% url 'detalle_proyecto' proyecto.id %}">
+                Cancelar
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

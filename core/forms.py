@@ -23,6 +23,11 @@ class ProyectoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
+        self.fields["descripcion"].label = "Descripción"
+        self.fields["fecha_inicio"].label = "Fecha de inicio"
+        self.fields["fecha_termino"].label = "Fecha de término"
+        
+        
         if not self.is_bound:
             self.fields["fecha_inicio"].initial = timezone.localdate()
             
@@ -48,6 +53,10 @@ class TareaForm(forms.ModelForm):
         proyecto = kwargs.pop("proyecto", None)
         usuario = kwargs.pop("usuario", None)
         super().__init__(*args, **kwargs)
+        
+        self.fields["descripcion"].label = "Descripción"
+        self.fields["fecha_inicio"].label = "Fecha de inicio"
+        self.fields["fecha_termino"].label = "Fecha de término"
         
         modo_creacion = self.instance.pk is None
         

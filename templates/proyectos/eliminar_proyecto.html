@@ -1,37 +1,55 @@
 {% extends "base.html" %}
 
-{% block title %}Eliminar proyecto - {{ proyecto.nombre }} {% endblock  %}
+{% block title %}Eliminar proyecto - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
+<section class="pagina-formulario">
+
+<div class="formulario-contenedor">
+
+    <span class="etiqueta-seccion">PROYECTO</span>
+
     <h1>Eliminar proyecto</h1>
 
-    <p>Proyecto: {{ proyecto.nombre }}</p>
+    <p class="texto-secundario">
+        Proyecto: <strong>{{ proyecto.nombre }}</strong>
+    </p>
 
     {% if error %}
-    
-        <p>{{ error }}</p>
-    
+        <div class="mensaje mensaje-error">
+            {{ error }}
+        </div>
     {% endif %}
 
-    <p>
+    <p class="texto-secundario">
         ¿Estás seguro de que quieres eliminar este proyecto?
     </p>
 
-    <p>
+    <p class="texto-secundario">
         El proyecto dejará de aparecer entre tus proyectos activos.
     </p>
 
-    <form method="post">
+    <br>
+
+    <form method="post" class="formulario">
+
         {% csrf_token %}
 
-        <button type="submit">
+        <button type="submit" class="boton boton-eliminar">
             Confirmar eliminación
         </button>
+
     </form>
 
-    <a href="{% url 'detalle_proyecto' proyecto.id %}">
-        Cancelar
-    </a>
+    <p class="enlace-formulario">
+        <a href="{% url 'detalle_proyecto' proyecto.id %}">
+            Cancelar
+        </a>
+    </p>
 
-{% endblock  %}
+</div>
+
+</section>
+
+{% endblock %}

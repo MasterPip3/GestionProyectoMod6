@@ -1,145 +1,304 @@
 {% extends "base.html" %}
 
-{% block title %} {{ proyecto.nombre}} {% endblock  %}
+{% block title %}{{ proyecto.nombre }} | Gestión de proyectos{% endblock %}
 
 {% block content %}
 
-    <h1>{{ proyecto.nombre }}</h1>
+<section class="detalle-proyecto">
 
-    <p>{{ proyecto.descripcion }}</p>
+    <!-- ENCABEZADO DEL PROYECTO -->
+    <header class="detalle-encabezado">
 
-    <p>
-        Fecha de inicio:
-        {{ proyecto.fecha_inicio }}
-    </p>
+        <div class="detalle-encabezado-texto">
 
-    <p>
-        Fecha de término:
-        {{ proyecto.fecha_termino }}
-    </p>
+            <span class="etiqueta-seccion">PROYECTO</span>
 
-    <p>
-        Prioridad:
-        {{ proyecto.prioridad }}
-    </p>
+            <h1>{{ proyecto.nombre }}</h1>
 
-    <p>
-        Progreso:
-        {{ proyecto.progreso }}
-    </p>
-
-    <p>
-        Tu rol:
-        {{ participacion.get_rol_display }}
-    </p>
-
-    <hr>
-
-    <h2>Tareas</h2>
-
-    {% if tareas %}
-    
-        {% for tarea in tareas %}
-        
-        <article>
-            <h3>{{ tarea.nombre }}</h3>
-
-            <p>{{ tarea.descripcion }}</p>
-
-            <p> Desde {{ tarea.fecha_inicio }}
-                Hasta {{ tarea.fecha_termino }}
+            <p class="detalle-descripcion">
+                {{ proyecto.descripcion }}
             </p>
 
-            <p>
-                Importancia:
-                {{ tarea.importancia }}
-            </p>
+        </div>
 
-            <p>
-                Responsable:
-                {{ tarea.responsable.usuario.username }}
-            </p>
+        <div class="detalle-rol">
+            <span class="etiqueta-seccion">TU ROL</span>
+            <strong>{{ participacion.get_rol_display }}</strong>
+        </div>
 
-            <a href="{% url 'editar_tarea' proyecto.id tarea.id %}">
-                Editar tarea
-            </a>
+    </header>
 
-            {% if participacion.rol == "encargado_principal" %}
-            
-                <form method="post" action="{% url 'eliminar_tarea' proyecto.id tarea.id %}">
-                    {% csrf_token %}
 
-                    <button type="submit" onclick="return confirm('¿Está seguro de que desea eliminar esta tarea?');">
-                        Eliminar tarea
-                    </button>
-                </form>
+    <!-- INFORMACIÓN DEL PROYECTO -->
+    <section class="detalle-informacion">
 
-            {% endif %}
-        </article>
+        <div class="detalle-dato">
+            <span>Fecha de inicio</span>
+            <strong>{{ proyecto.fecha_inicio }}</strong>
+        </div>
 
-        {% endfor %}
-    
-    {% else %}
+        <div class="detalle-dato">
+            <span>Fecha de término</span>
+            <strong>{{ proyecto.fecha_termino }}</strong>
+        </div>
 
-        <p>Este proyecto no tiene tareas activas.</p>
-    
-    {% endif %}
+        <div class="detalle-dato">
+            <span>Progreso</span>
+            <strong>{{ proyecto.progreso | floatformat:-2 }}%</strong>
+        </div>
 
-    <a href="{% url 'crear_tarea' proyecto.id %}">
-        Crear tarea
-    </a>
+        <div class="detalle-dato detalle-dato-prioridad">
+            <span>Prioridad</span>
 
-    <p>
-        <a href="{% url 'agregar_participante' proyecto.id %}">
+            <div
+                class="pt-2 estrellas-prioridad prioridad-{{ proyecto.prioridad }}"
+                aria-label="Prioridad {{ proyecto.prioridad }} de 5"
+            >
+                {% for estrella in "12345" %}
+                    {% if forloop.counter <= proyecto.prioridad %}
+                        <span class="estrella estrella-activa">★</span>
+                    {% else %}
+                        <span class="estrella">★</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACCIONES -->
+    <section class="detalle-acciones">
+
+        <a
+            href="{% url 'crear_tarea' proyecto.id %}"
+            class="boton boton-principal"
+        >
+            Crear tarea
+        </a>
+
+        <a
+            href="{% url 'agregar_participante' proyecto.id %}"
+            class="boton boton-secundario"
+        >
             Agregar participante
         </a>
-    </p>
 
-    <p>
-        <a href="{% url 'participantes_proyecto' proyecto.id %}">
+        <a
+            href="{% url 'participantes_proyecto' proyecto.id %}"
+            class="boton boton-secundario"
+        >
             Ver participantes
         </a>
-    </p>
 
-    {% if participacion.rol == "encargado_principal" %}
-    
-        <p>
-            <a href="{% url 'eliminar_proyecto' proyecto.id %}">
+        {% if participacion.rol == "encargado_principal" %}
+
+            <a
+                href="{% url 'eliminar_proyecto' proyecto.id %}"
+                class="boton boton-eliminar"
+            >
                 Eliminar proyecto
             </a>
-        </p>
-    
-    {% endif %}
 
-    <a href="{% url 'dashboard' %}">Volver al dashboard</a>
-
-    <hr>
-
-    <nav>
-        {% if proyecto_anterior %}
-        
-            <a href="{% url 'detalle_proyecto' proyecto_anterior.id %}">
-                Proyecto anterior
-            </a>
-        
-        {% endif %}
-        
-        {% if proyecto_siguiente %}
-        
-            <a href="{% url 'detalle_proyecto' proyecto_siguiente.id %}">
-                Siguiente proyecto
-            </a>
-        
         {% endif %}
 
-        {% if not proyecto_siguiente and proyecto_primero and proyecto_primero.id != proyecto.id %}
+    </section>
 
-            <a href="{% url 'detalle_proyecto' proyecto_primero.id %}">
-                Volver al primer proyecto
-            </a>
-                
+
+    <!-- TAREAS -->
+    <section class="detalle-tareas">
+
+        <header class="detalle-seccion-encabezado">
+
+            <div>
+                <span class="etiqueta-seccion">TRABAJO</span>
+                <h2>Tareas</h2>
+            </div>
+
+            <span class="detalle-contador">
+                {{ tareas|length }} tareas
+            </span>
+
+        </header>
+
+
+        {% if tareas %}
+
+            <div class="lista-tareas">
+
+                {% for tarea in tareas %}
+
+                    <article class="tarjeta-tarea">
+
+                        <div class="tarjeta-tarea-cabecera">
+
+                            <div class="tarjeta-tarea-titulo">
+
+                                <span class="tarjeta-etiqueta">
+                                    TAREA
+                                </span>
+
+                                <h3>
+                                    {{ tarea.nombre }}
+                                </h3>
+
+                            </div>
+
+                            <!-- SEMÁFORO -->
+                            <span
+                                class="semaforo-tarea semaforo-{{ tarea.estado }}"
+                                aria-label="Estado de la tarea"
+                            ></span>
+
+                        </div>
+
+
+                        <p class="tarjeta-tarea-descripcion">
+                            {{ tarea.descripcion }}
+                        </p>
+
+
+                        <div class="tarjeta-tarea-datos">
+
+                            <div class="tarjeta-tarea-dato">
+
+                                <span>Fecha</span>
+
+                                <strong>
+                                    {{ tarea.fecha_inicio }}
+                                    —
+                                    {{ tarea.fecha_termino }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="tarjeta-tarea-dato">
+
+                                <span>Responsable</span>
+
+                                <strong>
+                                    {{ tarea.responsable.usuario.username }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="tarjeta-tarea-dato">
+
+                                <span>Importancia</span>
+
+                                <strong class="importancia-tarea">
+                                    {{ tarea.importancia }}/10
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="tarjeta-tarea-acciones">
+
+                            <a
+                                href="{% url 'editar_tarea' proyecto.id tarea.id %}"
+                                class="boton boton-secundario"
+                            >
+                                Editar tarea
+                            </a>
+
+                            {% if participacion.rol == "encargado_principal" %}
+
+                                <form
+                                    method="post"
+                                    action="{% url 'eliminar_tarea' proyecto.id tarea.id %}"
+                                >
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="boton boton-eliminar"
+                                        onclick="return confirm('¿Está seguro de que desea eliminar esta tarea?');"
+                                    >
+                                        Eliminar tarea
+                                    </button>
+
+                                </form>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="visor-vacio">
+
+                <p>
+                    Este proyecto no tiene tareas activas.
+                </p>
+
+            </div>
+
         {% endif %}
+
+    </section>
+
+
+    <!-- NAVEGACIÓN -->
+    <nav class="navegacion-proyecto" aria-label="Navegación entre proyectos">
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="navegacion-proyecto-enlace"
+        >
+            Volver al dashboard
+        </a>
+
+
+        <div class="navegacion-proyecto-proyectos">
+
+            {% if proyecto_anterior %}
+
+                <a
+                    href="{% url 'detalle_proyecto' proyecto_anterior.id %}"
+                    class="navegacion-proyecto-enlace"
+                >
+                    ← Proyecto anterior
+                </a>
+
+            {% endif %}
+
+
+            {% if proyecto_siguiente %}
+
+                <a
+                    href="{% url 'detalle_proyecto' proyecto_siguiente.id %}"
+                    class="navegacion-proyecto-enlace"
+                >
+                    Siguiente proyecto →
+                </a>
+
+            {% elif proyecto_primero and proyecto_primero.id != proyecto.id %}
+
+                <a
+                    href="{% url 'detalle_proyecto' proyecto_primero.id %}"
+                    class="navegacion-proyecto-enlace"
+                >
+                    Volver al primer proyecto
+                </a>
+
+            {% endif %}
+
+        </div>
+
     </nav>
-    
 
-{% endblock  %}
+</section>
+
+{% endblock %}

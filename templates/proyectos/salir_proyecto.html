@@ -1,40 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %}Salir del proyecto - {{ proyecto.nombre }} {% endblock  %}
+{% block title %}Salir del proyecto - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
+<section class="formulario-contenedor">
+
+    <span class="etiqueta-seccion">PARTICIPACIÓN</span>
+
     <h1>Salir del proyecto</h1>
 
-    <p>Proyecto: {{ proyecto.nombre }}</p>
+    <h2>{{ proyecto.nombre }}</h2>
+
+    <hr>
 
     {% if error %}
-    
-        <p>{{ error }}</p>
-    
+        <div class="mensaje mensaje-error">
+            {{ error }}
+        </div>
     {% endif %}
 
-    <p>¿Estás seguro de que quieres salir de este proyecto?</p>
+    <p class="texto-secundario">
+        ¿Estás seguro de que quieres salir de este proyecto?
+    </p>
 
     {% if participacion.rol == "encargado_principal" %}
-    
-        <p>
+
+        <div class="mensaje mensaje-error">
             Actualmente eres el encargado principal.
-            Si sales del proyecto, el ayudante actual pasará a ser el nuevo encargado principal.
-        </p>
-    
+            Si sales del proyecto, el ayudante actual pasará a ser el nuevo
+            encargado principal.
+        </div>
+
     {% endif %}
 
-    <p>No podrás salir mientras tengas tareas activas a tu cargo.</p>
+    <p class="texto-secundario">
+        No podrás salir mientras tengas tareas activas a tu cargo.
+    </p>
 
-    <form method="post">
+    <br>
+
+    <form method="post" class="formulario">
         {% csrf_token %}
 
-        <button type="submit">Continuar</button>
+        <button type="submit" class="boton boton-principal">
+            Continuar
+        </button>
     </form>
 
-    <a href="{% url 'participantes_proyecto' proyecto.id %}">
-        Cancelar
-    </a>
+    <p class="enlace-formulario">
+        <a href="{% url 'participantes_proyecto' proyecto.id %}">
+            Cancelar
+        </a>
+    </p>
 
-{% endblock  %}
+</section>
+
+{% endblock %}

@@ -1,21 +1,72 @@
 {% extends "base.html" %}
 
-{% block title %}Crear tarea - {{ proyecto.nombre }}{% endblock  %}
+{% block title %}Crear tarea - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
-    <h1>Crear tarea</h1>
+<section class="pagina-formulario">
 
-    <p>Proyecto: {{ proyecto.nombre }}</p>
+    <div class="formulario-contenedor">
 
-    <form method="post">
-        {% csrf_token %}
+        <span class="etiqueta-seccion">TAREA</span>
 
-        {{ form.as_p }}
+        <h1>Crear tarea</h1>
 
-        <button type="submit">Crear tarea</button>
-    </form>
+        <p class="texto-secundario">
+            Proyecto: {{ proyecto.nombre }}
+        </p>
 
-    <a href="{% url 'detalle_proyecto' proyecto.id %}">Volver al proyecto</a>
+        <form method="post" class="formulario">
 
-{% endblock  %}
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="campo-formulario">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <span class="ayuda-campo">
+                            {{ field.help_text }}
+                        </span>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <span class="mensaje-campo">
+                            {{ error }}
+                        </span>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="mensaje-campo">
+                    {% for error in form.non_field_errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="boton boton-principal">
+                Crear tarea
+            </button>
+
+        </form>
+
+        <p class="enlace-formulario">
+            <a href="{% url 'detalle_proyecto' proyecto.id %}">
+                Volver al proyecto
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

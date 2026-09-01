@@ -945,7 +945,7 @@ button, input, textarea, select {
 
 
 /* ==============================
-   DASHBOARD RESPONSIVE
+    DASHBOARD RESPONSIVE
    ============================== */
 
 @media (max-width: 767.98px) {
@@ -978,6 +978,446 @@ button, input, textarea, select {
 
     .tarjeta-prioridad {
         margin-top: 1rem;
+    }
+
+}
+
+/* ==============================
+    DETALLE DEL PROYECTO
+   ============================== */
+
+.detalle-proyecto {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* ==============================
+    ENCABEZADO
+   ============================== */
+
+.detalle-encabezado {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.detalle-encabezado-texto {
+    min-width: 0;
+}
+
+.detalle-encabezado h1 {
+    margin: 0.35rem 0 1rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.detalle-descripcion {
+    max-width: 760px;
+    margin: 0;
+    color: var(--color-texto-secundario);
+    line-height: 1.7;
+}
+
+.detalle-rol {
+    flex-shrink: 0;
+    min-width: 160px;
+    padding: 1rem 1.25rem;
+    background-color: var(--color-superficie);
+    border: 1px solid rgba(0, 245, 255, 0.18);
+    border-radius: var(--radio-borde);
+}
+
+.detalle-rol strong {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+
+/* ==============================
+    INFORMACIÓN
+   ============================== */
+
+.detalle-informacion {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.detalle-dato {
+    min-width: 0;
+    padding: 1rem 1.1rem;
+    background-color: var(--color-superficie);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radio-borde);
+}
+
+.detalle-dato span {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.detalle-dato strong {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.detalle-dato-prioridad .estrellas-prioridad {
+    margin-top: 0.15rem;
+}
+
+
+/* ==============================
+    ACCIONES
+   ============================== */
+
+.detalle-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 3.5rem;
+}
+
+.detalle-acciones .boton {
+    width: auto;
+}
+
+
+/* ==============================
+    SECCIÓN TAREAS
+   ============================== */
+
+.detalle-seccion-encabezado {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.detalle-seccion-encabezado h2 {
+    margin: 0.35rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.detalle-contador {
+    color: var(--color-texto-secundario);
+    font-size: 0.8rem;
+}
+
+
+/* ==============================
+    TARJETAS DE TAREA
+   ============================== */
+
+.lista-tareas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.tarjeta-tarea {
+    position: relative;
+    width: 100%;
+    padding: 1.35rem 1.5rem;
+    background-color: var(--color-tarjeta);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radio-borde);
+    transition:
+        transform var(--transicion-normal),
+        box-shadow var(--transicion-normal),
+        border-color var(--transicion-normal);
+}
+
+.tarjeta-tarea:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 0 18px rgba(0, 245, 255, 0.08);
+}
+
+.tarjeta-tarea-cabecera {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.tarjeta-tarea-titulo {
+    min-width: 0;
+}
+
+.tarjeta-tarea-titulo .tarjeta-etiqueta {
+    margin-bottom: 0.4rem;
+}
+
+.tarjeta-tarea h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+
+/* ==============================
+    SEMÁFORO
+   ============================== */
+
+.semaforo-tarea {
+    flex-shrink: 0;
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-top: 0.25rem;
+    border-radius: 50%;
+    box-shadow: 0 0 7px currentColor;
+}
+
+.semaforo-pendiente {
+    color: var(--color-advertencia);
+    background-color: var(--color-advertencia);
+}
+
+.semaforo-en_progreso {
+    color: var(--color-advertencia);
+    background-color: var(--color-advertencia);
+}
+
+.semaforo-completada {
+    color: var(--color-exito);
+    background-color: var(--color-exito);
+}
+
+
+/* ==============================
+    INFORMACIÓN DE TAREA
+   ============================== */
+
+.tarjeta-tarea-descripcion {
+    margin: 0.8rem 0 1.25rem;
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.tarjeta-tarea-datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.tarjeta-tarea-dato {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+}
+
+.tarjeta-tarea-dato span {
+    color: var(--color-texto-secundario);
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.tarjeta-tarea-dato strong {
+    font-size: 0.82rem;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.importancia-tarea {
+    color: var(--color-cian) !important;
+    font-weight: 700 !important;
+}
+
+
+/* ==============================
+    ACCIONES DE TAREA
+   ============================== */
+
+.tarjeta-tarea-acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tarjeta-tarea-acciones form {
+    margin: 0;
+}
+
+.tarjeta-tarea-acciones .boton {
+    width: auto;
+}
+
+
+/* ==============================
+    BOTÓN ELIMINAR
+   ============================== */
+
+.boton-eliminar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    background-color: transparent;
+    color: var(--color-error);
+    border: 1px solid rgba(255, 59, 95, 0.5);
+    border-radius: var(--radio-borde);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        transform var(--transicion-rapida),
+        filter var(--transicion-rapida),
+        box-shadow var(--transicion-rapida),
+        background-color var(--transicion-rapida);
+}
+
+.boton-eliminar:hover {
+    color: var(--color-error);
+    background-color: rgba(255, 59, 95, 0.06);
+    filter: brightness(1.08);
+    box-shadow: 0 0 12px rgba(255, 59, 95, 0.2);
+}
+
+.boton-eliminar:active {
+    transform: scale(0.98);
+}
+
+
+/* ==============================
+    NAVEGACIÓN
+   ============================== */
+
+.navegacion-proyecto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navegacion-proyecto-proyectos {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.25rem;
+}
+
+.navegacion-proyecto-enlace {
+    color: var(--color-texto-secundario);
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition:
+        color var(--transicion-rapida),
+        filter var(--transicion-rapida);
+}
+
+.navegacion-proyecto-enlace:hover {
+    color: var(--color-texto);
+    filter: blur(0.2px);
+}
+
+
+/* ==============================
+    DETALLE RESPONSIVE
+   ============================== */
+
+@media (max-width: 767.98px) {
+
+    .detalle-encabezado {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .detalle-rol {
+        width: 100%;
+    }
+
+    .detalle-informacion {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detalle-acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .detalle-acciones .boton {
+        width: 100%;
+    }
+
+    .tarjeta-tarea-datos {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .tarjeta-tarea-dato {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tarjeta-tarea-acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tarjeta-tarea-acciones .boton,
+    .tarjeta-tarea-acciones form {
+        width: 100%;
+    }
+
+    .tarjeta-tarea-acciones form .boton {
+        width: 100%;
+    }
+
+    .navegacion-proyecto {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .navegacion-proyecto-proyectos {
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .detalle-informacion {
+        grid-template-columns: 1fr;
+    }
+
+    .detalle-seccion-encabezado {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .navegacion-proyecto-proyectos {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
     }
 
 }

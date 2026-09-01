@@ -1,27 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %} Cambiar rol - {{ participacion_objetivo.usuario.username }} {% endblock  %}
+{% block title %}Cambiar rol - {{ participacion_objetivo.usuario.username }}{% endblock %}
 
 {% block content %}
 
-    <h1>Cambiar rol</h1>
+<section class="pagina-formulario">
 
-    <p>Proyecto: {{ proyecto.nombre }}</p>
+    <div class="formulario-contenedor">
 
-    <p>Usuario: {{ participacion_objetivo.usuario.username }}</p>
+        <span class="etiqueta-seccion">PARTICIPACIÓN</span>
 
-    <p>Rol actual: {{ participacion_objetivo.get_rol_display }}</p>
+        <h1>Cambiar rol</h1>
 
-    <form method="post">
-        {% csrf_token %}
+        <hr>
 
-        {{ form.as_p }}
+        <p class="texto-secundario">
+            Proyecto: <strong>{{ proyecto.nombre }}</strong>
+        </p>
 
-        <button type="submit">
-            Guardar cambio
-        </button>
-    </form>
+        <p class="texto-secundario">
+            Usuario: <strong>{{ participacion_objetivo.usuario.username }}</strong>
+        </p>
 
-    <a href="{% url 'participantes_proyecto' proyecto.id %}">Cancelar</a>
+        <p class="texto-secundario">
+            Rol actual:
+            <strong>{{ participacion_objetivo.get_rol_display }}</strong>
+        </p>
 
-{% endblock  %}
+        <form method="post" class="formulario">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="boton boton-principal">
+                Guardar cambio
+            </button>
+
+        </form>
+
+        <p class="enlace-formulario">
+            <a href="{% url 'participantes_proyecto' proyecto.id %}">
+                Cancelar
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

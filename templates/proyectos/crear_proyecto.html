@@ -1,16 +1,93 @@
 {% extends "base.html" %}
 
-{% block title %}Crear proyecto{% endblock  %}
+{% block title %}Crear proyecto{% endblock %}
 
 {% block content %}
 
-    <h1>Crear proyecto</h1>
+<section class="pagina-formulario">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <div class="formulario-contenedor">
 
-        <button type="submit">Crear proyecto</button>
-    </form>
+        <span class="etiqueta-seccion">PROYECTO</span>
 
-{% endblock  %}
+        <h1>Crear proyecto</h1>
+
+        <form method="post" class="formulario">
+
+            {% csrf_token %}
+
+            <div class="campo-formulario">
+                {{ form.nombre.label_tag }}
+                {{ form.nombre }}
+
+                {% if form.nombre.errors %}
+                    <div class="mensaje-campo">
+                        {{ form.nombre.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="campo-formulario">
+                {{ form.descripcion.label_tag }}
+                {{ form.descripcion }}
+
+                {% if form.descripcion.errors %}
+                    <div class="mensaje-campo">
+                        {{ form.descripcion.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="campo-formulario">
+                {{ form.fecha_inicio.label_tag }}
+                {{ form.fecha_inicio }}
+
+                {% if form.fecha_inicio.errors %}
+                    <div class="mensaje-campo">
+                        {{ form.fecha_inicio.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="campo-formulario">
+                {{ form.fecha_termino.label_tag }}
+                {{ form.fecha_termino }}
+
+                {% if form.fecha_termino.errors %}
+                    <div class="mensaje-campo">
+                        {{ form.fecha_termino.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="campo-formulario">
+                {{ form.prioridad.label_tag }}
+                {{ form.prioridad }}
+
+                {% if form.prioridad.errors %}
+                    <div class="mensaje-campo">
+                        {{ form.prioridad.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="boton boton-principal">
+                Crear proyecto
+            </button>
+
+        </form>
+
+        <p class="enlace-formulario">
+            <a href="{% url 'dashboard' %}">
+                Cancelar
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+

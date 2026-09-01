@@ -1,32 +1,60 @@
 {% extends "base.html" %}
 
-{% block title %}Confirmar salida - {{ proyecto.nombre }} {% endblock  %}
+{% block title %}Confirmar salida - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
-    <h1>Confirmar salida del proyecto</h1>
+<section class="pagina-formulario">
 
-    <p>Proyecto: {{ proyecto.nombre }}</p>
+    <div class="formulario-contenedor">
 
-    <p>Estás a punto de abandonar este proyecto como encargado principal</p>
+        <span class="etiqueta-seccion">PARTICIPACIÓN</span>
 
-    <p>El ayudante pasará a ser el nuevo encargado principal.</p>
+        <h1>Confirmar salida del proyecto</h1>
 
-    <p>
-        Esta acción modificará el rol de ayudante.
-        ¿Confirmas que deseas continuar?
-    </p>
+        <p class="texto-secundario">
+            Proyecto: <strong>{{ proyecto.nombre }}</strong>
+        </p>
 
-    <form method="post">
-        {% csrf_token %}
+        <hr>
 
-        <button type="submit" name="confirmar_transferencia" value="1">
-            Confirmar salida
-        </button>
-    </form>
+        <p class="texto-secundario">
+            Estás a punto de abandonar este proyecto como
+            encargado principal.
+        </p>
 
-    <a href="{% url 'participantes_proyecto' proyecto.id %}">
-        Cancelar
-    </a>
+        <p class="texto-secundario">
+            El ayudante pasará a ser el nuevo encargado principal.
+        </p>
 
-{% endblock  %}
+        <p class="texto-secundario">
+            Esta acción modificará el rol de ayudante.
+            ¿Confirmas que deseas continuar?
+        </p>
+
+        <form method="post" class="formulario">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                name="confirmar_transferencia"
+                value="1"
+                class="boton boton-principal"
+            >
+                Confirmar salida
+            </button>
+
+        </form>
+
+        <p class="enlace-formulario">
+            <a href="{% url 'participantes_proyecto' proyecto.id %}">
+                Cancelar
+            </a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

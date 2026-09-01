@@ -1,56 +1,152 @@
 {% extends "base.html" %}
 
-{% block title %}Participantes - {{ proyecto.nombre }} {% endblock  %}
+{% block title %}Participantes - {{ proyecto.nombre }}{% endblock %}
 
 {% block content %}
 
-    <h1>Participantes</h1>
+<section class="detalle-proyecto">
 
-    <h2>{{ proyecto.nombre }}</h2>
+<header class="detalle-encabezado">
+
+    <div class="detalle-encabezado-texto">
+
+        <span class="etiqueta-seccion">PARTICIPACIÓN</span>
+
+        <h1>Participantes</h1>
+
+        <p class="detalle-descripcion">
+            Proyecto: {{ proyecto.nombre }}
+        </p>
+
+    </div>
+
+</header>
+
+
+<section>
+
+    <header class="detalle-seccion-encabezado">
+
+        <div>
+            <span class="etiqueta-seccion">EQUIPO</span>
+            <h2>Participantes</h2>
+        </div>
+
+        {% if participantes %}
+            <span class="detalle-contador">
+                {{ participantes|length }} participante{{ participantes|length|pluralize }}
+            </span>
+        {% endif %}
+
+    </header>
+
 
     {% if participantes %}
-    
-        {% for participante in participantes %}
-        
-            <article>
-                <h3>{{ participante.usuario.username }}</h3>
 
-                <p>
-                    Rol:
-                    {{ participante.get_rol_display }}
-                </p>
+        <div class="lista-tareas">
 
-                {% if participacion.rol == "encargado_principal" and participante != participacion %}
+            {% for participante in participantes %}
 
-                    <a href="{% url 'cambiar_rol_participacion' proyecto.id participante.id %}">
-                        Cambiar rol
-                    </a>
+                <article class="tarjeta-tarea">
 
-                    <a href="{% url 'retirar_participante' proyecto.id participante.id %}">
-                        Retirar del proyecto
-                    </a>
-                
-                {% endif %}
+                    <div class="tarjeta-tarea-cabecera">
 
-                {% if participante == participacion %}
-                
-                    <p>
-                        <a href="{% url 'salir_proyecto' proyecto.id %}">
-                            Salir del proyecto
-                        </a>
-                    </p>
-                
-                {% endif %}
-            </article>
+                        <div class="tarjeta-tarea-titulo">
 
-        {% endfor %}
+                            <span class="tarjeta-etiqueta">
+                                PARTICIPANTE
+                            </span>
+
+                            <h3>
+                                {{ participante.usuario.username }}
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tarjeta-tarea-datos">
+
+                        <div class="tarjeta-tarea-dato">
+
+                            <span>Rol</span>
+
+                            <strong>
+                                {{ participante.get_rol_display }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if participacion.rol == "encargado_principal" and participante != participacion %}
+
+                        <div class="tarjeta-tarea-acciones">
+
+                            <a
+                                href="{% url 'cambiar_rol_participacion' proyecto.id participante.id %}"
+                                class="boton boton-secundario"
+                            >
+                                Cambiar rol
+                            </a>
+
+                            <a
+                                href="{% url 'retirar_participante' proyecto.id participante.id %}"
+                                class="boton boton-eliminar"
+                            >
+                                Retirar del proyecto
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if participante == participacion %}
+
+                        <div class="tarjeta-tarea-acciones">
+
+                            <a
+                                href="{% url 'salir_proyecto' proyecto.id %}"
+                                class="boton boton-secundario"
+                            >
+                                Salir del proyecto
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                </article>
+
+            {% endfor %}
+
+        </div>
 
     {% else %}
 
-        <p>No hay participantes activos en este proyecto.</p>
-    
+        <div class="visor-vacio">
+            <p>No hay participantes activos en este proyecto.</p>
+        </div>
+
     {% endif %}
 
-    <a href="{% url 'detalle_proyecto' proyecto.id %}">Volver al proyecto</a>
+</section>
 
-{% endblock  %}
+
+<nav class="navegacion-proyecto">
+
+    <a
+        href="{% url 'detalle_proyecto' proyecto.id %}"
+        class="navegacion-proyecto-enlace"
+    >
+        Volver al proyecto
+    </a>
+
+</nav>
+
+</section>
+
+{% endblock %}
