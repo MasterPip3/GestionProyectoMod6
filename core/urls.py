@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import inicio, dashboard, registro, crear_proyecto_view, detalle_proyecto, crear_tarea_view, editar_tarea_view, eliminar_tarea_view, agregar_participante_view, participantes_proyecto, cambiar_rol_participacion_view, salir_proyecto_view, retirar_participante_view, eliminar_proyecto_view 
+from .views import inicio, dashboard, registro, crear_proyecto_view, detalle_proyecto, crear_tarea_view, editar_tarea_view, eliminar_tarea_view, agregar_participante_view, participantes_proyecto, cambiar_rol_participacion_view, salir_proyecto_view, retirar_participante_view, eliminar_proyecto_view, faq
 
 
 urlpatterns = [
@@ -17,4 +17,5 @@ urlpatterns = [
     path('proyectos/<int:proyecto_id>/salir', salir_proyecto_view, name='salir_proyecto'),
     path('proyectos/<int:proyecto_id>/participantes/<int:participacion_id>/retirar/', retirar_participante_view, name='retirar_participante'),
     path('proyectos/<int:proyecto_id>/eliminar', eliminar_proyecto_view, name='eliminar_proyecto'),
+    path('faq/', faq, name='faq')
 ]

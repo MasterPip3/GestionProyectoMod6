@@ -1,0 +1,136 @@
+
+
+
+{% extends "base.html" %}
+
+{% block title %}FAQ | Gestión de proyectos{% endblock %}
+
+{% block content %}
+
+<section class="faq">
+
+    <header class="faq-encabezado">
+        <span class="etiqueta-seccion">AYUDA</span>
+
+        <h1>Preguntas frecuentes</h1>
+
+        <p class="texto-secundario">
+            Encuentra respuestas sobre el funcionamiento de proyectos,
+            tareas, participantes y permisos.
+        </p>
+    </header>
+
+    <div class="faq-lista">
+
+        <article class="faq-item">
+            <h2>¿Qué puedo hacer dentro de un proyecto?</h2>
+
+            <p>
+                Puedes consultar la información del proyecto, gestionar
+                tareas y participar en el equipo según el rol que tengas
+                asignado.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Qué diferencia hay entre los roles?</h2>
+
+            <p>
+                El Encargado principal administra el proyecto y sus
+                participantes. El Ayudante puede colaborar en la gestión
+                del proyecto. El Colaborador puede trabajar sobre las
+                tareas que tenga disponibles.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Cómo se calcula el progreso de un proyecto?</h2>
+
+            <p>
+                El progreso se calcula considerando el estado y la
+                importancia de cada tarea. Las tareas con mayor importancia
+                tienen un mayor peso en el progreso total.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Qué significan las estrellas de prioridad?</h2>
+
+            <p>
+                Las estrellas representan la prioridad del proyecto,
+                utilizando una escala de 1 a 5. Esta prioridad es
+                independiente de la urgencia de las tareas y no modifica
+                el cálculo del progreso.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Qué ocurre cuando una tarea se acerca a su fecha límite?</h2>
+
+            <p>
+                Las tareas muestran una señal visual de urgencia según
+                el tiempo restante para su fecha límite. Esta señal es
+                independiente de la prioridad del proyecto.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Se pueden eliminar definitivamente los proyectos o tareas?</h2>
+
+            <p>
+                La aplicación utiliza eliminación lógica. Esto permite
+                conservar la información necesaria para mantener el
+                historial y la trazabilidad del sistema.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Quién puede crear tareas?</h2>
+
+            <p>
+                El Encargado principal y el Ayudante pueden crear tareas.
+                Los Colaboradores pueden editar las tareas que tengan
+                disponibles, pero no pueden crearlas ni eliminarlas.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Quién puede eliminar una tarea?</h2>
+
+            <p>
+                Solamente el Encargado principal puede eliminar tareas.
+            </p>
+        </article>
+
+        <article class="faq-item">
+            <h2>¿Qué enfoque se utiliza para las vistas?</h2>
+
+            <p>
+                El proyecto utiliza el enfoque FBV (Function-Based Views).
+                Las vistas se implementan mediante funciones de Python que reciben
+                una solicitud HTTP y gestionan el flujo correspondiente antes de
+                devolver una respuesta.
+                <br>
+                La decisión de utilizar FBV no se debe a que el proyecto sea considerado más sencillo ni a que CBV sea técnicamente más complejo.
+                <br>
+                La decisión responde al orden de aprendizaje del curso:
+                <br>
+                * Este proyecto corresponde a la práctica de FBV.
+                <br>
+                * El siguiente proyecto será desarrollado utilizando CBV.
+                <br>
+                De esta manera se busca practicar explícitamente ambos enfoques en proyectos diferentes y respetar el orden en que fueron enseñados durante el curso.
+            </p>
+        </article>
+
+    </div>
+
+    <div class="faq-retorno">
+        <a href="{% url 'dashboard' %}" class="boton boton-secundario">
+            Volver al dashboard
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

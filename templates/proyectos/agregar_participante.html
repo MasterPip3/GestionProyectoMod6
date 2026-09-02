@@ -22,7 +22,31 @@
 
             {% csrf_token %}
 
-            {{ form.as_p }}
+            {{ form.non_field_errors }}
+
+            {% for field in form.visible_fields %}
+
+                <div class="campo-formulario">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <span class="ayuda-campo">
+                            {{ field.help_text }}
+                        </span>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <span class="mensaje-campo">
+                            {{ error }}
+                        </span>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
 
             <button type="submit" class="boton boton-principal">
                 Agregar participante

@@ -391,3 +391,12 @@ def eliminar_proyecto_view(request, proyecto_id):
     }
     
     return render(request, "proyectos/eliminar_proyecto.html", contexto)
+
+
+@login_required
+def faq(request):
+    contexto = {
+        "usuario": request.user,
+    }
+
+    return render(request, "faq.html", contexto)

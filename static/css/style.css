@@ -1421,3 +1421,72 @@ button, input, textarea, select {
     }
 
 }
+
+.acciones-publicas {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* FAQ */
+
+.faq {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-encabezado {
+    margin-bottom: 3rem;
+}
+
+.faq-encabezado h1 {
+    margin: .35rem 0 .75rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+}
+
+.faq-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faq-item {
+    padding: 1.5rem;
+    background: var(--color-tarjeta);
+    border: 1px solid rgba(0, 245, 255, .16);
+    border-radius: var(--radio-borde);
+    transition:
+        transform var(--transicion-normal),
+        border-color var(--transicion-normal),
+        box-shadow var(--transicion-normal);
+}
+
+.faq-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 245, 255, .35);
+    box-shadow: 0 0 14px rgba(0, 245, 255, .10);
+}
+
+.faq-item h2 {
+    margin: 0 0 .75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-texto);
+}
+
+.faq-item p {
+    margin: 0;
+    color: var(--color-texto-secundario);
+    font-size: .9rem;
+    line-height: 1.7;
+}
+
+.faq-retorno {
+    width: min(100%, 360px);
+    margin: 2.5rem auto 0;
+}
+
+.faq-retorno .boton-secundario {
+    width: 100%;
+}
