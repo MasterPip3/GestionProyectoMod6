@@ -1,47 +1,48 @@
+# ProyectoModulo6
+
+Aplicación web de gestión de proyectos, tareas y participantes desarrollada con Django como proyecto académico.
+
+Repositorio:
 
 https://github.com/MasterPip3/GestionProyectoMod6.git
 
+---
 
-# ProyectoModulo6
+## 1. Descripción
 
-Aplicación web de gestión de proyectos y tareas desarrollada con Django.
+ProyectoModulo6 permite gestionar proyectos de trabajo, sus tareas y los participantes asociados.
 
-# Gestión de proyectos
+La aplicación incorpora autenticación de usuarios, administración de proyectos, gestión de tareas, roles dentro de cada proyecto, cálculo de progreso ponderado, indicadores visuales y eliminación lógica.
 
-Aplicación web desarrollada con Django para la gestión de proyectos, tareas y participantes.
-
-El proyecto permite a los usuarios registrarse, autenticarse, crear y gestionar proyectos, administrar tareas y participantes y consultar el progreso de los proyectos según las reglas definidas para cada rol.
-
-> **Estado:** Desarrollo en curso. Este documento corresponde a una versión provisional y será consolidado antes de la entrega final.
+El proyecto está desarrollado con un enfoque académico y está destinado a ejecutarse localmente.
 
 ---
 
-## 1. Objetivo del proyecto
+## 2. Objetivos
 
-Desarrollar una aplicación web de gestión de proyectos que permita organizar proyectos, tareas y participantes de forma centralizada.
+El proyecto busca aplicar los principales conceptos de desarrollo web con Django estudiados durante el curso, incluyendo:
 
-La aplicación contempla:
-
-* Registro y autenticación de usuarios.
-* Creación y gestión de proyectos.
-* Gestión de tareas asociadas a proyectos.
-* Asignación de responsables.
-* Gestión de participantes y roles.
-* Cálculo de progreso de los proyectos.
-* Indicadores visuales de prioridad y urgencia.
-* Restricciones de acceso según el rol del usuario.
-* Eliminación lógica de proyectos y tareas.
-* Navegación entre proyectos.
-* Interfaz responsiva orientada principalmente a escritorio.
+* Autenticación y registro de usuarios.
+* Autorización según roles.
+* Modelos y relaciones mediante el ORM de Django.
+* Formularios y validaciones.
+* Function-Based Views (FBV).
+* Separación de lógica mediante una capa de servicios.
+* Herencia de templates.
+* Django Admin.
+* Protección CSRF.
+* Operaciones CRUD.
+* Eliminación lógica.
+* Interfaz dinámica mediante JavaScript.
+* Diseño responsivo.
 
 ---
 
-## 2. Tecnologías
+## 3. Tecnologías
 
 * Python 3.14.6
 * Django 6.1
-* SQLite para desarrollo
-* MySQL para producción
+* SQLite
 * HTML
 * CSS
 * JavaScript
@@ -49,107 +50,234 @@ La aplicación contempla:
 * Lucide Icons
 * Tipografía Inter
 
+La aplicación utiliza SQLite para su ejecución local.
+
 ---
 
-## 3. Arquitectura
+## 4. Instalación
 
-El proyecto utiliza una separación por responsabilidades.
+### 4.1. Requisitos
+
+Se requiere tener instalado:
+
+* Python 3.14.6 o una versión compatible con el proyecto.
+* Git, si se desea clonar el repositorio.
+
+### 4.2. Clonar el repositorio
+
+Desde una terminal:
+
+```bash
+git clone https://github.com/MasterPip3/GestionProyectoMod6.git
+```
+
+Ingresar a la carpeta:
+
+```bash
+cd GestionProyectoMod6
+```
+
+### 4.3. Crear el entorno virtual
+
+```bash
+python -m venv venv
+```
+
+En Windows PowerShell:
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+En Windows CMD:
+
+```cmd
+venv\Scripts\activate
+```
+
+### 4.4. Instalar Django
+
+En caso de instalar las dependencias manualmente:
+
+```bash
+pip install "Django==6.1"
+```
+
+### 4.5. Aplicar las migraciones
+
+Desde la carpeta que contiene `manage.py`:
+
+```bash
+python manage.py migrate
+```
+
+### 4.6. Crear un usuario administrador
+
+Para acceder al panel de administración de Django:
+
+```bash
+python manage.py createsuperuser
+```
+
+Seguir las instrucciones mostradas por Django.
+
+### 4.7. Ejecutar el servidor
+
+```bash
+python manage.py runserver
+```
+
+La aplicación estará disponible localmente en:
+
+```text
+http://127.0.0.1:8000/
+```
+
+La página principal corresponde a la raíz del sitio.
+
+El panel de administración se encuentra en:
+
+```text
+http://127.0.0.1:8000/admin/
+```
+
+---
+
+## 5. Arquitectura
+
+El proyecto utiliza una separación de responsabilidades basada en Django y una capa de servicios para concentrar la lógica de negocio.
 
 ### Views
 
-Las views reciben las solicitudes HTTP, coordinan la operación correspondiente y preparan el contexto necesario para las plantillas.
+Las views reciben las solicitudes HTTP, controlan el flujo de cada operación y preparan el contexto que será enviado a los templates.
+
+El proyecto utiliza **Function-Based Views (FBV)**.
 
 ### Services
 
-La lógica de negocio se concentra en la capa de servicios.
+La capa de servicios concentra las reglas de negocio y las operaciones que requieren coordinación entre modelos.
 
-Entre las responsabilidades de esta capa se encuentran:
+Entre sus responsabilidades se encuentran:
 
 * Crear proyectos.
-* Crear y gestionar tareas.
+* Obtener proyectos para el dashboard.
+* Crear tareas.
+* Editar tareas.
+* Eliminar tareas lógicamente.
 * Agregar participantes.
 * Cambiar roles.
 * Retirar participantes.
 * Salir de proyectos.
+* Transferir el rol de encargado principal cuando corresponde.
 * Eliminar proyectos lógicamente.
 * Validar permisos y reglas de negocio.
-* Obtener información necesaria para el dashboard y la navegación.
+* Calcular el progreso de los proyectos.
+* Obtener información necesaria para la navegación.
+
+### Models
+
+Los modelos representan las entidades principales del sistema y sus relaciones.
+
+Las entidades principales son:
+
+* `Proyecto`
+* `Tarea`
+* `Participacion`
+
+### Forms
+
+Los formularios utilizan `forms.Form`, `forms.ModelForm` y las herramientas de autenticación proporcionadas por Django.
+
+Los formularios realizan validaciones de entrada y permiten controlar los campos que se presentan al usuario.
 
 ### Templates
 
-Los templates se encargan de representar la información entregada por las views.
+Los templates representan la información preparada por las views.
 
-Se utiliza herencia de templates mediante `base.html`.
+Se utiliza herencia mediante `base.html`.
 
 ### Static
 
-Los recursos estáticos contienen principalmente:
+Los archivos estáticos contienen principalmente:
 
 * CSS.
 * JavaScript.
-* Otros recursos necesarios para la interfaz.
 
 ---
 
-## 4. Autenticación y autorización
+## 6. Autenticación y autorización
 
 La autenticación utiliza el sistema incorporado de Django.
 
 Los usuarios pueden:
 
-* Crear una cuenta.
+* Registrarse.
 * Iniciar sesión.
 * Cerrar sesión.
 
 Las vistas internas requieren autenticación.
 
-La autorización relacionada con los proyectos se determina mediante la participación activa del usuario y su rol dentro del proyecto.
+La autorización dentro de un proyecto depende de la participación activa del usuario y del rol que tenga asignado.
+
+Las validaciones de permisos también se realizan en la capa de servicios para evitar depender exclusivamente de la interfaz.
 
 ---
 
-## 5. Roles de proyecto
+## 7. Roles
 
-Cada usuario posee un único rol dentro de un proyecto.
+Cada usuario posee un único rol activo dentro de un proyecto.
 
-Los roles definidos son:
+Los roles son:
 
-1. Encargado principal
-2. Ayudante
-3. Colaborador
+1. Encargado principal.
+2. Ayudante.
+3. Colaborador.
 
 ### Encargado principal
 
-Es el responsable principal del proyecto.
-
-Puede:
+El encargado principal puede:
 
 * Agregar participantes.
 * Cambiar roles.
 * Retirar participantes.
-* Eliminar el proyecto lógicamente.
+* Crear tareas.
+* Editar tareas.
 * Eliminar tareas.
+* Eliminar el proyecto lógicamente.
 
-El encargado principal no puede simplemente retirarse mediante la función de retiro de participantes.
+El encargado principal no puede cambiar su propio rol mediante el flujo normal de cambio de rol.
 
-Cuando corresponda abandonar un proyecto, se utiliza el flujo específico definido para salir del proyecto.
+Tampoco puede retirarse mediante la función destinada a retirar participantes.
+
+Si desea abandonar el proyecto, debe utilizar el flujo específico de salida.
+
+Cuando corresponde y existe un ayudante, este pasa a ser el nuevo encargado principal.
 
 ### Ayudante
 
-Puede participar en la gestión del proyecto de acuerdo con los permisos definidos.
+El ayudante puede:
 
-Si el encargado principal abandona el proyecto bajo las condiciones establecidas, el ayudante pasa a ocupar el rol de encargado principal.
+* Crear tareas.
+* Editar tareas.
+* Participar en la gestión del proyecto según los permisos definidos.
+
+Si el encargado principal abandona el proyecto bajo las condiciones establecidas, el ayudante puede asumir el rol de encargado principal.
 
 ### Colaborador
 
-Puede participar en la gestión de tareas según los permisos definidos.
+El colaborador puede:
 
-No puede eliminar tareas.
+* Crear sus propias tareas.
+* Editar sus tareas.
+* Participar en el trabajo del proyecto.
+
+El colaborador no puede eliminar tareas.
 
 ---
 
-## 6. Proyectos
+## 8. Proyectos
 
-Cada proyecto contiene, entre otros datos:
+Cada proyecto posee:
 
 * Nombre.
 * Descripción.
@@ -159,17 +287,27 @@ Cada proyecto contiene, entre otros datos:
 * Progreso.
 * Estado de eliminación lógica.
 
-La prioridad del proyecto utiliza una escala de 1 a 5 y se representa visualmente mediante estrellas.
+El usuario que crea un proyecto se convierte automáticamente en su encargado principal.
 
-La prioridad sirve para destacar y ordenar proyectos y no participa directamente en el cálculo del progreso.
+La fecha de inicio se establece automáticamente con la fecha actual al crear el proyecto.
+
+La fecha de término debe respetar las validaciones establecidas para el proyecto.
+
+### Prioridad
+
+La prioridad utiliza una escala de 1 a 5.
+
+Se representa visualmente mediante estrellas.
+
+La prioridad sirve para destacar y ordenar proyectos, pero no participa en el cálculo del progreso.
 
 ---
 
-## 7. Tareas
+## 9. Tareas
 
-Las tareas pertenecen a un proyecto.
+Cada tarea pertenece a un proyecto y tiene un responsable correspondiente a una participación activa dentro del proyecto.
 
-Sus principales atributos incluyen:
+Sus principales atributos son:
 
 * Nombre.
 * Descripción.
@@ -178,271 +316,280 @@ Sus principales atributos incluyen:
 * Importancia.
 * Estado.
 * Responsable.
-* Estado de eliminación lógica.
+* Eliminación lógica.
 
-La importancia de la tarea utiliza una escala de 1 a 10.
+La importancia utiliza una escala de 1 a 10.
 
-La importancia determina el peso de la tarea dentro del cálculo del progreso ponderado.
+Una tarea con importancia 10 tiene diez veces el peso de una tarea con importancia 1 dentro del cálculo del progreso.
 
----
+### Fechas
 
-## 8. Cálculo de progreso
+Las fechas de las tareas deben respetar los límites establecidos por el proyecto:
 
-El progreso del proyecto se determina a partir del avance de sus tareas y considerando la importancia de cada una.
-
-Estados definidos:
-
-* Pendiente: 0%.
-* En progreso: 50% del valor correspondiente a su importancia.
-* Completada: 100% del valor correspondiente a su importancia.
-
-La importancia de una tarea funciona como peso relativo: una tarea con importancia 10 tiene diez veces el peso de una tarea con importancia 1.
-
-La prioridad del proyecto no interviene en este cálculo.
+* La fecha de inicio de la tarea no puede ser anterior al inicio del proyecto.
+* La fecha de término de la tarea no puede superar el término del proyecto.
+* La fecha de inicio no puede ser posterior a la fecha de término.
 
 ---
 
-## 9. Urgencia de las tareas
+## 10. Estados y progreso
 
-La urgencia es independiente de la importancia.
+Los estados de las tareas son:
 
-Se representa mediante un indicador visual tipo semáforo.
+* Pendiente.
+* En progreso.
+* Completada.
 
-Las tareas pendientes presentan:
+El progreso del proyecto se calcula de manera ponderada utilizando la importancia de las tareas.
 
-* Verde: más de 4 días restantes.
-* Amarillo: entre 1 y 4 días restantes.
-* Las tareas completadas utilizan un indicador diferenciado.
+La equivalencia utilizada es:
 
-La urgencia no modifica el peso de la tarea dentro del progreso.
+* Pendiente → 0%.
+* En progreso → 50%.
+* Completada → 100%.
+
+La importancia actúa como peso relativo.
+
+La prioridad del proyecto y la urgencia de una tarea no modifican este cálculo.
+
+El progreso se muestra con dos decimales en la interfaz.
 
 ---
 
-## 10. Eliminación lógica
+## 11. Urgencia de las tareas
 
-La eliminación de proyectos y tareas se realiza mediante eliminación lógica en lugar de eliminación física.
+La urgencia es independiente de:
 
-Esto permite conservar los registros y facilita futuras necesidades de auditoría o registro histórico.
+* La prioridad del proyecto.
+* La importancia de la tarea.
+* El cálculo del progreso.
+
+La regla definida para el indicador visual es:
+
+* Más de 4 días restantes → verde.
+* Entre 1 y 4 días restantes → amarillo.
+* Tarea completada → indicador de completada.
+
+---
+
+## 12. Eliminación lógica
+
+Los proyectos y tareas utilizan eliminación lógica.
+
+En lugar de eliminar físicamente el registro de la base de datos, se modifica su estado de eliminación.
 
 Los elementos eliminados no deben aparecer como elementos activos dentro de la aplicación.
 
-Un proyecto eliminado tampoco puede continuar siendo gestionado normalmente.
+Los participantes también pueden ser retirados mediante desactivación lógica de su participación.
+
+Esta estrategia permite conservar los registros y facilita futuras necesidades de trazabilidad.
 
 ---
 
-## 11. Dashboard
+## 13. Dashboard
 
-El dashboard constituye la página principal de los usuarios autenticados.
+El dashboard constituye la página principal para los usuarios autenticados.
 
 Los proyectos se organizan en tres categorías:
 
-* Proyectos donde el usuario es encargado principal.
-* Proyectos donde el usuario es ayudante.
-* Proyectos donde el usuario es colaborador.
+* Encargado principal.
+* Ayudante.
+* Colaborador.
 
-Cada categoría dispone de su propio visor de proyectos.
+Cada categoría posee su propio visor.
 
-Los visores utilizan un carrusel de navegación visual.
+Las tarjetas muestran:
 
-La interacción definida es:
-
-* Hasta 5 proyectos: se mantiene un único visor.
-* Más de 5 proyectos: se muestran grupos de 5.
-* El desplazamiento es manual.
-* Cada visor funciona independientemente.
-* En móvil se conserva el comportamiento horizontal del visor.
-* Las tarjetas se muestran verticalmente dentro de cada página del carrusel.
-
-El carrusel corresponde a una decisión de interfaz y su interacción se gestiona mediante JavaScript.
-
----
-
-## 12. Tarjetas de proyecto
-
-Las tarjetas muestran únicamente la información definida para el dashboard.
-
-La tarjeta contiene:
-
-* Etiqueta de proyecto.
-* Nombre.
+* Nombre del proyecto.
 * Descripción resumida.
-* Fechas.
+* Fecha de inicio.
+* Fecha de término.
 * Progreso.
-* Rol correspondiente.
+* Rol.
 * Prioridad mediante estrellas.
 
-La descripción se limita visualmente para evitar que textos extensos deformen la tarjeta. Para consultar la descripción completa, el usuario debe ingresar al proyecto.
+Las descripciones extensas se limitan visualmente en las tarjetas. La información completa se consulta ingresando al detalle del proyecto.
 
-Toda la tarjeta es clickeable y conduce al detalle del proyecto.
-
----
-
-## 13. Interfaz visual
-
-La aplicación utiliza un diseño:
-
-* Oscuro.
-* Moderno.
-* Tecnológico.
-* Simple.
-* Orientado a organización, energía y acción.
-
-La paleta utiliza tonos oscuros acompañados de colores neón de forma controlada.
-
-Se utiliza:
-
-* Fondo oscuro.
-* Superficies en gris oscuro.
-* Texto blanco.
-* Colores neón para elementos destacados.
-* Glow sutil.
-* Bordes ligeramente redondeados.
-* Microanimaciones.
-
-La tipografía principal es **Inter**.
-
-Los iconos utilizan **Lucide**.
+El diseño contempla un carrusel JavaScript con grupos de hasta cinco proyectos.
 
 ---
 
-## 14. Navbar
+## 14. Participantes
 
-Las páginas internas utilizan una barra de navegación horizontal.
+Los participantes se administran mediante la entidad `Participacion`.
 
-La estructura principal es:
+Una participación relaciona:
 
-**Gestión de proyectos — Dashboard — Proyectos**
+* Usuario.
+* Proyecto.
+* Rol.
+* Estado activo.
 
-y en el lado derecho:
+Un usuario no puede tener más de una participación activa en el mismo proyecto.
 
-**usuario: usuario — Logout**
+El encargado principal es creado automáticamente al crear el proyecto.
 
-En pantallas pequeñas la navegación se transforma en un menú hamburguesa.
+El sistema contempla flujos específicos para:
 
-El modo claro queda documentado como una posible extensión futura, pero la implementación actual utiliza exclusivamente modo oscuro.
+* Agregar participantes.
+* Cambiar roles.
+* Retirar participantes.
+* Salir del proyecto.
+* Transferir el rol de encargado principal.
 
 ---
 
-## 15. Formularios
+## 15. Django Admin
 
-Los formularios comparten un estilo visual común.
+Los modelos principales se encuentran registrados en Django Admin.
 
-Características definidas:
+El panel fue personalizado mediante clases `ModelAdmin`.
 
-* Centrado horizontal y vertical.
-* Diseño orientado a una pantalla simple.
-* Padding lateral mínimo del 10%.
-* Campos centrados.
-* Campos de igual ancho.
-* Etiquetas con mayor peso visual que los inputs.
-* Descripción con mayor altura que los campos normales.
-* Sin expansión vertical inesperada de los inputs.
-* Responsividad escritorio → tableta → móvil.
-* Focus automático en el primer campo.
-* Botones con formato común.
-* Botones de eliminación visualmente diferenciados.
+La personalización contempla:
 
-Las reglas de validación permanecen activas internamente aunque determinados mensajes de ayuda técnica no se muestran visualmente para mantener una interfaz limpia.
+* Columnas visibles.
+* Filtros.
+* Búsqueda.
+
+Los modelos administrados son:
+
+* Proyecto.
+* Tarea.
+* Participación.
 
 ---
 
 ## 16. Seguridad
 
-El proyecto utiliza mecanismos proporcionados por Django, entre ellos:
+La aplicación utiliza mecanismos de seguridad proporcionados por Django, entre ellos:
 
 * Sistema de autenticación.
 * Protección CSRF.
 * Restricción de vistas mediante autenticación.
-* Validaciones en formularios.
-* Validaciones adicionales en la capa de servicios.
+* Validación de formularios.
+* Validación adicional en la capa de servicios.
 * Control de permisos según rol.
 
-Las validaciones de seguridad y negocio no dependen exclusivamente de la interfaz.
+Las reglas importantes de negocio no dependen únicamente de los elementos visuales de la interfaz.
 
 ---
 
-## 17. Responsividad
+## 17. Interfaz
 
-La aplicación está diseñada principalmente para escritorio, pero contempla tres rangos:
+La interfaz utiliza un diseño oscuro de inspiración tecnológica y Cyberpunk, manteniendo una aplicación visualmente simple y organizada.
 
-1. Escritorio.
-2. Tableta.
-3. Móvil.
+Características principales:
 
-Se mantiene el contenido centrado y se evita el desplazamiento horizontal general de la página.
+* Fondo oscuro.
+* Superficies oscuras.
+* Texto claro.
+* Colores neón utilizados de forma controlada.
+* Glow sutil.
+* Bordes ligeramente redondeados.
+* Microanimaciones.
+* Tipografía Inter.
+* Iconos Lucide.
+* Bootstrap.
 
-Cuando el contenido supera la altura disponible, se permite desplazamiento vertical.
-
-Los visores de proyectos mantienen su interacción horizontal específica.
+La interfaz contempla comportamiento responsivo para escritorio, tableta y móvil.
 
 ---
 
-## 18. Decisión sobre FBV
+## 18. Formularios
+
+Los formularios mantienen una estructura visual común.
+
+Se utilizan formularios de Django y `ModelForm` cuando corresponde.
+
+Las validaciones permanecen activas aunque algunos textos de ayuda técnica se oculten visualmente para mantener una interfaz limpia.
+
+Los formularios incluyen protección CSRF en las operaciones POST.
+
+---
+
+## 19. FAQ
+
+La aplicación incluye una sección de preguntas frecuentes accesible desde la navegación interna.
+
+La FAQ explica aspectos como:
+
+* Funcionamiento de proyectos.
+* Roles.
+* Tareas.
+* Progreso.
+* Prioridad.
+* Urgencia.
+* Eliminación lógica.
+* Permisos.
+* Enfoque FBV.
+
+---
+
+## 20. Decisión académica sobre FBV
 
 Este proyecto utiliza **Function-Based Views (FBV)**.
 
-La decisión de utilizar FBV no se debe a que el proyecto sea considerado más sencillo ni a que CBV sea técnicamente más complejo.
+Esta decisión responde al orden de aprendizaje definido para el curso.
 
-La decisión responde al orden de aprendizaje del curso:
+Este proyecto corresponde a la práctica de FBV.
 
-* Este proyecto corresponde a la práctica de FBV.
-* El siguiente proyecto será desarrollado utilizando CBV.
+El siguiente proyecto será desarrollado utilizando CBV para practicar ambos enfoques en proyectos diferentes.
 
-De esta manera se busca practicar explícitamente ambos enfoques en proyectos diferentes y respetar el orden en que fueron enseñados durante el curso.
+La elección de FBV no se basa en considerar que CBV sea técnicamente más complejo ni en que FBV sea simplemente más sencillo.
 
 ---
 
-## 19. Mejoras y extensiones futuras
+## 21. Alcance
 
-Quedan consideradas como posibles extensiones:
+ProyectoModulo6 tiene un alcance académico y local.
 
-* Modo claro seleccionable por el usuario.
-* Gestión avanzada de equipos.
-* Buscador.
+El objetivo es demostrar la aplicación práctica de los conceptos estudiados durante el curso mediante una aplicación funcional de gestión de proyectos.
+
+No forman parte del alcance actual:
+
+* Despliegue de producción.
+* Configuración de infraestructura de producción.
+* Integración con servicios externos.
+* Arquitecturas distribuidas.
+* Funcionalidades empresariales avanzadas.
+
+---
+
+## 22. Extensiones futuras
+
+Como posibles extensiones se consideran:
+
 * Cronograma/Gantt.
 * Exportación a Excel.
 * Sistema de notificaciones.
+* Buscador.
+* Gestión avanzada de equipos.
+* Modo claro.
 * Otras funcionalidades que puedan incorporarse posteriormente.
 
-Estas extensiones no forman parte de los requisitos actuales salvo que sean incorporadas explícitamente durante el desarrollo.
+Estas extensiones no forman parte del alcance actual.
 
 ---
 
-## 20. Estado del proyecto
+## 23. Estado del proyecto
 
-El proyecto se encuentra en etapa de implementación de la interfaz definitiva.
+El proyecto se encuentra en etapa de consolidación final.
 
-Las funcionalidades principales de:
+Las funcionalidades principales se encuentran implementadas y se están completando algunos comportamientos pendientes antes de ejecutar la batería definitiva de pruebas.
 
-* autenticación;
-* proyectos;
-* tareas;
-* participantes;
-* roles;
-* navegación;
-* salida de proyectos;
-* retiro de participantes;
-* eliminación lógica;
+Pendientes principales:
 
-se encuentran en proceso de consolidación y pruebas.
-
-La interfaz se está implementando directamente orientada al producto final, evitando HTML visual provisional.
+* Preparación de una base de datos limpia para la entrega.
+* Pruebas automatizadas.
 
 ---
 
-## 21. Documentación complementaria
+## 24. Documentación
 
-El proyecto contempla además:
+El proyecto incluye:
 
-* README.
-* Bitácora de desarrollo.
-* FAQ/tutorial.
+* `README.md`: documentación general e instalación.
+* `BITACORA.md`: registro de decisiones y evolución del desarrollo.
+* `FAQ`: preguntas frecuentes y explicación de decisiones relevantes.
 
-La bitácora registrará decisiones relevantes tomadas durante el desarrollo.
-
-La FAQ/tutorial explicará conceptos y decisiones que puedan generar dudas durante la revisión del proyecto.
-
-<!--
-* DECISIÓN ACADÉMICA IMPORTANTE:
-La utilización explícita de FBV en este proyecto se debe a que corresponde a la práctica de FBV del curso. El siguiente proyecto será desarrollado con CBV por el orden en que fueron aprendidos ambos enfoques, NO porque FBV haya sido considerado más sencillo o CBV más complejo.
--->
+La documentación se mantiene alineada con el alcance académico del proyecto.
